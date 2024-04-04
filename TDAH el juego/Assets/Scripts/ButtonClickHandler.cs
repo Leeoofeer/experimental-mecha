@@ -29,7 +29,7 @@ public class ButtonClickHandler : MonoBehaviour
         {
             if (GameManager.Instance != null)
             {
-                GameManager.Instance.UpdateSideQuestCounter();
+                GameManager.Instance.UpdateSideQuestCounter(clicksNeeded);
             }
             gameObject.SetActive(false);            
         }

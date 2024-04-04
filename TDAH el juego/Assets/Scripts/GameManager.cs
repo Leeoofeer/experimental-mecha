@@ -38,13 +38,21 @@ public class GameManager : MonoBehaviour
     private int currentClicks = 0;
     public GameObject buttonSideQuest;
     public GameObject SideQuestContainer;
-    public TextMeshProUGUI sideQuestCounter;
-    private int quantitySideQuests = 0;
+    public GameObject questRewardContainer;
+    public GameObject questReward;
+    private int quantityClicksSideQuest = 0;
+    private int sideQuestsCompleted = 0;
 
-    public void UpdateSideQuestCounter()
+    public GameObject endGamePanel;
+    public TextMeshProUGUI endGameText;
+
+    public void UpdateSideQuestCounter(int clicks)
     {
-        quantitySideQuests++;
-        sideQuestCounter.text = "Sidequest completadas: " + quantitySideQuests;
+        quantityClicksSideQuest += clicks;
+        sideQuestsCompleted++;
+        GameObject newReward = Instantiate(questReward, questRewardContainer.transform);
+        newReward.name = "Reward";
+        Debug.Log("SideQuest completada. Reward otorgado");
     }
 
     public void PlayerWalked()
@@ -55,7 +63,10 @@ public class GameManager : MonoBehaviour
         CheckCurrentClicks(currentClicks);
         if (currentClicks >= mainGoalClicks)
         {
-            Debug.Log("Has ganado");
+            Debug.Log("Partida finalizada");
+            SideQuestContainer.SetActive(false);
+            endGamePanel.SetActive(true);
+            endGameText.text = "Felicidades, llegaste al objetivo. En el camino te has destinado esfuerzos extra al hacer " + quantityClicksSideQuest + " clicks en " + sideQuestsCompleted + " misiones secundarias.";
         }
     }
 
@@ -118,6 +129,11 @@ public class GameManager : MonoBehaviour
             buttonClickHandler.indicator = buttonIndex;
             newButton.name = "SideQuest LvL" + (buttonIndex + 1);
         }        
+    }
+
+    public void CreateQuestReward()
+    {
+        Debug.Log("Otorgando reward por quest completada");
     }
 
     private void Update()
