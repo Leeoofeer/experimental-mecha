@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        Screen.SetResolution(550, 975, false);
     }
     #endregion
 
@@ -45,6 +46,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject endGamePanel;
     public TextMeshProUGUI endGameText;
+    public int CurrentClicks { get => currentClicks; set => currentClicks = value; }
 
     public void UpdateSideQuestCounter(int clicks)
     {
@@ -58,10 +60,10 @@ public class GameManager : MonoBehaviour
     public void PlayerWalked()
     {
         
-        currentClicks ++;
-        Debug.Log("Player walked. Steps Walked: " + currentClicks);
-        CheckCurrentClicks(currentClicks);
-        if (currentClicks >= mainGoalClicks)
+        CurrentClicks ++;
+        Debug.Log("Player walked. Steps Walked: " + CurrentClicks);
+        CheckCurrentClicks(CurrentClicks);
+        if (CurrentClicks >= mainGoalClicks)
         {
             Debug.Log("Partida finalizada");
             SideQuestContainer.SetActive(false);
