@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.ComponentModel;
+using System.Xml.Linq;
 
 public class GameManager : MonoBehaviour
 {
@@ -39,6 +41,8 @@ public class GameManager : MonoBehaviour
     private int currentClicks = 0;
     public GameObject buttonSideQuest;
     public GameObject SideQuestContainer;
+    public GameObject CaveQuestContainer;
+    public GameObject MineQuestContainer;
     public GameObject questRewardContainer;
     public GameObject questReward;
     private int quantityClicksSideQuest = 0;
@@ -47,6 +51,14 @@ public class GameManager : MonoBehaviour
     public GameObject endGamePanel;
     public TextMeshProUGUI endGameText;
     public int CurrentClicks { get => currentClicks; set => currentClicks = value; }
+
+    public GameObject ButtonCaveQuest;
+    public GameObject ButtonMineQuest;
+    public GameObject ContainerCaveQuest;
+    public GameObject ContainerMineQuest;
+
+
+
 
     public void UpdateSideQuestCounter(int clicks)
     {
@@ -69,6 +81,16 @@ public class GameManager : MonoBehaviour
             SideQuestContainer.SetActive(false);
             endGamePanel.SetActive(true);
             endGameText.text = "Felicidades, llegaste al objetivo. En el camino te has destinado esfuerzos extra al hacer " + quantityClicksSideQuest + " clicks en " + sideQuestsCompleted + " misiones secundarias.";
+        }
+        else if (CurrentClicks == 83)
+        {
+            ActivateQuest(go: ButtonCaveQuest);
+            FillQuestContainer( 4,  3,  1, ContainerCaveQuest);
+        }
+        else if (CurrentClicks == 130)
+        {
+            ActivateQuest(go: ButtonMineQuest);
+            FillQuestContainer(6, 2, 2, ContainerMineQuest);
         }
     }
 
@@ -146,5 +168,80 @@ public class GameManager : MonoBehaviour
     public void ExitGame()
     {
         Application.Quit();
+    }
+
+    public void ActivateQuest(GameObject go)
+    {
+        go.SetActive(true);        
+    }
+
+    public void FillQuestContainer(int quantityA, int quantityB, int quantityC, GameObject container)
+    {
+        for (int i = 0; i < quantityA; i++)
+        {
+            GameObject newButton = Instantiate(buttonSideQuest, container.transform);
+            ButtonClickHandler buttonClickHandler = newButton.GetComponent<ButtonClickHandler>();
+            buttonClickHandler.indicator = 0;
+            newButton.name = "Quest LvL" + (0 + 1);
+            TextMeshProUGUI text = newButton.GetComponentInChildren<TextMeshProUGUI>();
+            if(container.name == "ContainerCaveQuest")
+            {
+                text.text = "CaveQuest";
+            }
+            else if (container.name == "ContainerMineQuest")
+            {
+                text.text = "MineQuest";
+            }
+            else
+            {
+                text.text = "SideQuest";
+            }
+        }
+        for (int i = 0; i < quantityB; i++)
+        {
+            GameObject newButton = Instantiate(buttonSideQuest, container.transform);
+            ButtonClickHandler buttonClickHandler = newButton.GetComponent<ButtonClickHandler>();
+            buttonClickHandler.indicator = 1;
+            newButton.name = "Quest LvL" + (1 + 1);
+            TextMeshProUGUI text = newButton.GetComponentInChildren<TextMeshProUGUI>();
+            if (container.name == "ContainerCaveQuest")
+            {
+                text.text = "CaveQuest";
+            }
+            else if (container.name == "ContainerMineQuest")
+            {
+                text.text = "MineQuest";
+            }
+            else
+            {
+                text.text = "SideQuest";
+            }
+
+        }
+        for (int i = 0; i < quantityC; i++)
+        {
+            GameObject newButton = Instantiate(buttonSideQuest, container.transform);
+            ButtonClickHandler buttonClickHandler = newButton.GetComponent<ButtonClickHandler>();
+            buttonClickHandler.indicator = 2;
+            newButton.name = "Quest LvL" + (2 + 1);
+            TextMeshProUGUI text = newButton.GetComponentInChildren<TextMeshProUGUI>();
+            if (container.name == "ContainerCaveQuest")
+            {
+                text.text = "CaveQuest";
+            }
+            else if (container.name == "ContainerMineQuest")
+            {
+                text.text = "MineQuest";
+            }
+            else
+            {
+                text.text = "SideQuest";
+            }
+        }
+    }
+
+    public void ChangeActiveState(GameObject go)
+    {
+        go.SetActive(!go.activeSelf);
     }
 }
