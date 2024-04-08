@@ -17,21 +17,22 @@ public class ButtonClickHandler : MonoBehaviour
             button.onClick.AddListener(HandleButtonClick);
         }
         myText = GetComponentInChildren<TextMeshProUGUI>();
-        myText.text = "SideQuest\r\n" + currentClicks + "/" + requiredClicks[indicator];
+        myText.text = "Quest\r\n" + currentClicks + "/" + requiredClicks[indicator];
     }
 
     private void HandleButtonClick()
     {
         currentClicks++;
         int clicksNeeded = requiredClicks[indicator];
-        myText.text = "SideQuest\r\n" + currentClicks + "/" + clicksNeeded;
+        myText.text = "Quest\r\n" + currentClicks + "/" + clicksNeeded;
         if (currentClicks >= clicksNeeded)
         {
             if (GameManager.Instance != null)
             {
                 GameManager.Instance.UpdateSideQuestCounter(clicksNeeded);
             }
-            gameObject.SetActive(false);            
+            gameObject.SetActive(false);
+            Destroy(gameObject, 1);
         }
     }
 }

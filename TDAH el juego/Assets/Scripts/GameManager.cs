@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.ComponentModel;
 using System.Xml.Linq;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -41,8 +42,7 @@ public class GameManager : MonoBehaviour
     private int currentClicks = 0;
     public GameObject buttonSideQuest;
     public GameObject SideQuestContainer;
-    public GameObject CaveQuestContainer;
-    public GameObject MineQuestContainer;
+    public GameObject AllQuestContainer;
     public GameObject questRewardContainer;
     public GameObject questReward;
     private int quantityClicksSideQuest = 0;
@@ -52,14 +52,15 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI endGameText;
     public int CurrentClicks { get => currentClicks; set => currentClicks = value; }
 
+    public GameObject ButtonSideQuest;
     public GameObject ButtonCaveQuest;
     public GameObject ButtonMineQuest;
     public GameObject ContainerCaveQuest;
     public GameObject ContainerMineQuest;
-
-
-
-
+    public GameObject player, playerPath;
+    public TextMeshProUGUI playerFinal;
+    private bool isGameFinished = false;
+    public bool isGameStarted = false;
     public void UpdateSideQuestCounter(int clicks)
     {
         quantityClicksSideQuest += clicks;
@@ -67,6 +68,14 @@ public class GameManager : MonoBehaviour
         GameObject newReward = Instantiate(questReward, questRewardContainer.transform);
         newReward.name = "Reward";
         Debug.Log("SideQuest completada. Reward otorgado");
+    }
+
+    public void StartGame()
+    {
+        isGameStarted = true;        
+        ActivateQuest(go: player);
+        ActivateQuest(go: playerPath);
+
     }
 
     public void PlayerWalked()
@@ -78,8 +87,11 @@ public class GameManager : MonoBehaviour
         if (CurrentClicks >= mainGoalClicks)
         {
             Debug.Log("Partida finalizada");
-            SideQuestContainer.SetActive(false);
-            endGamePanel.SetActive(true);
+            AllQuestContainer.SetActive(false);
+            DeactivateQuest(go: playerPath);
+            DeactivateQuest(go: player);
+            ChoosePlayerFinal();
+            isGameFinished = true;
             endGameText.text = "Felicidades, llegaste al objetivo. En el camino te has destinado esfuerzos extra al hacer " + quantityClicksSideQuest + " clicks en " + sideQuestsCompleted + " misiones secundarias.";
         }
         else if (CurrentClicks == 83)
@@ -90,8 +102,40 @@ public class GameManager : MonoBehaviour
         else if (CurrentClicks == 130)
         {
             ActivateQuest(go: ButtonMineQuest);
+            DeactivateQuest(go: ButtonCaveQuest);
+            DeactivateQuest(go: ContainerCaveQuest);
             FillQuestContainer(6, 2, 2, ContainerMineQuest);
         }
+        else if (CurrentClicks == 180)
+        {
+            DeactivateQuest(go: ButtonMineQuest);
+            DeactivateQuest(go: ContainerMineQuest);
+            
+        }
+    }
+
+    private void DeactivateQuest(GameObject go)
+    {
+        go.SetActive(false);
+    }
+
+    private void ChoosePlayerFinal()
+    {
+        if (CurrentClicks+ quantityClicksSideQuest <= 199)
+        {
+            playerFinal.text = "Final 1: Llegar al objetivo sin distracciones es un logro, no muchos pueden mantener tal nivel de concentracion. Pero la pregunta final es: ¿Que te perdiste simplemente por no haberte permitido hacer otra cosa? Hay cosas que solo estuvieron a tu alcance en su momento ahora no puedes retroceder a buscarlas.";
+        }
+        else if (CurrentClicks+ quantityClicksSideQuest > 199 && CurrentClicks+ quantityClicksSideQuest <= 230)
+        {
+            playerFinal.text = "Final 2: Te has moderado en cuanto a que hacerle foco y que no, reflexionando sobre tus decisiones. Algunas veces nos distraemos en la ruta para llegar a nuestro verdadero objetivo. Si esto sucede que valga la pena, sino el tiempo perdido no podrá ser recuperado.";
+        }
+        else if (CurrentClicks+ quantityClicksSideQuest > 230)
+        {
+            playerFinal.text = "Final 3: Le has dedicado tiempo a cualquier cosa que se te ha cruzado, llegaste al final pero a que costo, el tiempo ha pasado y no podra ser recuperado. Ahora sin energia y sin ganas de nada, te recuestas y reflexionas sobre el por qué no te concentraste cuando debias.";
+
+        }
+        endGamePanel.SetActive(true);
+
     }
 
     private void CheckCurrentClicks(int currentClicks)
@@ -152,6 +196,7 @@ public class GameManager : MonoBehaviour
             ButtonClickHandler buttonClickHandler = newButton.GetComponent<ButtonClickHandler>();
             buttonClickHandler.indicator = buttonIndex;
             newButton.name = "SideQuest LvL" + (buttonIndex + 1);
+            newButton.GetComponent<Image>().color = ButtonSideQuest.GetComponent<Image>().color;
         }        
     }
 
@@ -162,7 +207,8 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W)) { PlayerWalked(); }
+        if(isGameFinished == false && isGameStarted)
+            if (Input.GetKeyDown(KeyCode.W)) { PlayerWalked(); }
     }
 
     public void ExitGame()
@@ -184,19 +230,22 @@ public class GameManager : MonoBehaviour
             buttonClickHandler.indicator = 0;
             newButton.name = "Quest LvL" + (0 + 1);
             TextMeshProUGUI text = newButton.GetComponentInChildren<TextMeshProUGUI>();
-            if(container.name == "ContainerCaveQuest")
+            if(container.name == "CaveQuestContainer")
             {
-                text.text = "CaveQuest";
+                newButton.GetComponent<Image>().color = ButtonCaveQuest.GetComponent<Image>().color;
             }
-            else if (container.name == "ContainerMineQuest")
+            else if (container.name == "MineQuestContainer")
             {
                 text.text = "MineQuest";
+                newButton.GetComponent<Image>().color = ButtonMineQuest.GetComponent<Image>().color;
             }
             else
             {
                 text.text = "SideQuest";
+                newButton.GetComponent<Image>().color = ButtonSideQuest.GetComponent<Image>().color;
             }
         }
+
         for (int i = 0; i < quantityB; i++)
         {
             GameObject newButton = Instantiate(buttonSideQuest, container.transform);
@@ -204,17 +253,19 @@ public class GameManager : MonoBehaviour
             buttonClickHandler.indicator = 1;
             newButton.name = "Quest LvL" + (1 + 1);
             TextMeshProUGUI text = newButton.GetComponentInChildren<TextMeshProUGUI>();
-            if (container.name == "ContainerCaveQuest")
+            if (container.name == "CaveQuestContainer")
             {
-                text.text = "CaveQuest";
+                newButton.GetComponent<Image>().color = ButtonCaveQuest.GetComponent<Image>().color;
             }
-            else if (container.name == "ContainerMineQuest")
+            else if (container.name == "MineQuestContainer")
             {
                 text.text = "MineQuest";
+                newButton.GetComponent<Image>().color = ButtonMineQuest.GetComponent<Image>().color;
             }
             else
             {
                 text.text = "SideQuest";
+                newButton.GetComponent<Image>().color = ButtonSideQuest.GetComponent<Image>().color;
             }
 
         }
@@ -225,17 +276,19 @@ public class GameManager : MonoBehaviour
             buttonClickHandler.indicator = 2;
             newButton.name = "Quest LvL" + (2 + 1);
             TextMeshProUGUI text = newButton.GetComponentInChildren<TextMeshProUGUI>();
-            if (container.name == "ContainerCaveQuest")
+            if (container.name == "CaveQuestContainer")
             {
-                text.text = "CaveQuest";
+                newButton.GetComponent<Image>().color = ButtonCaveQuest.GetComponent<Image>().color;
             }
-            else if (container.name == "ContainerMineQuest")
+            else if (container.name == "MineQuestContainer")
             {
                 text.text = "MineQuest";
+                newButton.GetComponent<Image>().color = ButtonMineQuest.GetComponent<Image>().color;
             }
             else
             {
                 text.text = "SideQuest";
+                newButton.GetComponent<Image>().color = ButtonSideQuest.GetComponent<Image>().color;
             }
         }
     }
