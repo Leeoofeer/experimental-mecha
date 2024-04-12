@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "636179939892",
+    "firebase_url": "https://connectfamily-2e54b-default-rtdb.firebaseio.com",
+    "project_id": "connectfamily-2e54b",
+    "storage_bucket": "connectfamily-2e54b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:636179939892:android:7c826e015f733976ce0061",
+        "android_client_info": {
+          "package_name": "com.pickingleo.connectfamily"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCk2Vb1zKkTfTiKM56QnwTim-EKOux6acA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
