@@ -192,7 +192,9 @@ public class FirebaseTest : MonoBehaviour
     private void LightUpPlace( GameObject contenedor,  Image placeImage)
     {    
         contenedor = GameObject.Find("Point_" + lugar);
-        placeImage = contenedor.GetComponentInChildren<Image>(); placeImage.color = Color.red;
+        placeImage = contenedor.GetComponentInChildren<Image>();
+        CambiarAlphaDeImagen(0, placeImage);
+
     }
 
     private void TurnOffPlaces()
@@ -200,7 +202,9 @@ public class FirebaseTest : MonoBehaviour
         Image placeImage = null;
         foreach (GameObject place in places)
         {
-            placeImage = place.GetComponentInChildren<Image>(); placeImage.color = Color.grey;
+            placeImage = place.GetComponentInChildren<Image>();
+
+            CambiarAlphaDeImagen(0.96f, placeImage);
         }
     }
 
@@ -219,6 +223,12 @@ public class FirebaseTest : MonoBehaviour
         
     }
 
+    public void CancelUpdate()
+    {        
+        CancelInvoke("GetDataFromFirestore");
+        Debug.Log("Actualización constante desactivada.");
+    }
+
     void UpdateText()
     {
         lastUpdate.text = "Último update: " + actualizacion + " Italia";
@@ -226,5 +236,19 @@ public class FirebaseTest : MonoBehaviour
         place.text = "Me encuentro en: " + lugar;
     }
 
+    void CambiarAlphaDeImagen(float nuevoAlpha, Image imagen)
+    {
+        Color colorActual = imagen.color;
+
+        colorActual.a = nuevoAlpha;
+
+        imagen.color = colorActual;
+    }
+
+
+    public void CloseApp()
+    {
+        Application.Quit();
+    }
 
 }
