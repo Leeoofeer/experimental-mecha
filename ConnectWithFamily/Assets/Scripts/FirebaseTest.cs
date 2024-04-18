@@ -6,6 +6,7 @@ using Firebase.Firestore;
 using System;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Networking.Types;
 
 public class FirebaseTest : MonoBehaviour
 {
@@ -17,18 +18,43 @@ public class FirebaseTest : MonoBehaviour
     string mood;
     public GameObject[] places; // Array de imagenes de los lugares
     public TextMeshProUGUI lastUpdate, currentMood, place;
+    public Image conexionFirebase;
 
     // Start is called before the first frame update
     void Start()
     {
         CheckFirebase();
-        Screen.SetResolution(1080, 1920, true);
+        Screen.SetResolution(500, 950, false);
+        
     }
+
+    /*void Awake()
+    {
+        Firebase.AppOptions options = new Firebase.AppOptions
+        {
+            DatabaseUrl = new Uri("https://connectfamily-2e54b-default-rtdb.firebaseio.com") ,           
+            AppId = "1:636179939892:android:7c826e015f733976ce0061",
+            ApiKey = "AIzaSyCk2Vb1zKkTfTiKM56QnwTim-EKOux6acA",
+            StorageBucket = "connectfamily-2e54b.appspot.com",
+            ProjectId = "connectfamily-2e54b",
+        };
+        
+        Firebase.FirebaseApp app = Firebase.FirebaseApp.Create(options);
+        
+    }*/
+
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (db != null)
+        {
+            conexionFirebase.color = Color.green;
+
+        }else
+        {
+            conexionFirebase.color = Color.red;
+        }
     }
 
     // Método para comprobar si Firebase se ha inicializado correctamente
@@ -45,6 +71,7 @@ public class FirebaseTest : MonoBehaviour
             else
             {
                 Debug.LogError($"Failed to initialize Firebase: {task.Exception}");
+                conexionFirebase.color = Color.red;
             }
         });
     }
