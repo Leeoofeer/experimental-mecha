@@ -7,9 +7,9 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     #region Singleton
-    private static GameTimeManager instance;
+    private static UIManager instance;
 
-    public static GameTimeManager Instance
+    public static UIManager Instance
     {
         get { return instance; }
     }
