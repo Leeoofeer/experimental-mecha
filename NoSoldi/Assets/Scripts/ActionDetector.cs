@@ -38,7 +38,14 @@ public class ActionDetector : MonoBehaviour
             RentHouse rentHouse = GameObject.Find("RentHouse").GetComponent<RentHouse>();
             
             rentHouse.ConsumeProduct();
+        }else if (GetObjectName() == "Computer")
+        {
+            Debug.Log("Interactuando con la Computer");
+            Computer computer = GameObject.Find("Computer").GetComponent<Computer>();
+            
+            computer.ConsumeProduct();
         }
+
     }
 
 

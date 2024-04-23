@@ -7,10 +7,13 @@ public class RentHouse : MonoBehaviour
     private float price = 0.0f;
     private int sleepness = 0;
     private int happiness = 0;
+    private int sanity = 0;
 
     public float GetPrice() { return price; }
     public int GetFullness() { return sleepness; }
     public int GetHappiness() { return happiness; }
+    public int GetSanity() { return sanity; }
+
 
     void Start()
     {
@@ -22,6 +25,7 @@ public class RentHouse : MonoBehaviour
         price = 500f;
         sleepness = 80;
         happiness = 40;
+        sanity = 30;
     }
 
     public void ConsumeProduct()
@@ -35,7 +39,7 @@ public class RentHouse : MonoBehaviour
             UIManager.Instance.UpdateMoney();
             PlayerStats.Instance.SetMoney(-price);
 
-            GameTimeManager.Instance.FastForward();
+            GameTimeManager.Instance.FastForward(8);
             StartCoroutine(ReturnFastForward());
             
             
@@ -48,7 +52,9 @@ public class RentHouse : MonoBehaviour
         yield return new WaitForSeconds(8);
         PlayerStats.Instance.SetSleep(sleepness);
         PlayerStats.Instance.SetHappiness(happiness);
+        PlayerStats.Instance.SetSanity(sanity);
         UIManager.Instance.UpdateSleep();
         UIManager.Instance.UpdateHappiness();
+        UIManager.Instance.UpdateSanity();
     }
 }

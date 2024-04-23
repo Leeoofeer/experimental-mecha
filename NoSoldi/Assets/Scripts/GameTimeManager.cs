@@ -93,17 +93,17 @@ public class GameTimeManager : MonoBehaviour
         timeScale = value;
     }
 
-    public void FastForward()
+    public void FastForward(float timeAmount)
     {
         isFastForward = true;
-        SetTimeScale(3f);
+        SetTimeScale(timeAmount);
         ChangeScriptsState(false);
-        StartCoroutine(ReturnToGameplay());
+        StartCoroutine(ReturnToGameplay(timeAmount));
     }    
 
-    IEnumerator ReturnToGameplay()
+    IEnumerator ReturnToGameplay(float timeAmount)
     {
-        yield return new WaitForSeconds(8);
+        yield return new WaitForSeconds(timeAmount);
         SetTimeScale(originalTimeScale);
         ChangeScriptsState(true);
         isFastForward = false;
