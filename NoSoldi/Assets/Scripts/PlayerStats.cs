@@ -4,27 +4,75 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
-    private int sanity = 100;
-    private int hunger = 100;
-    private int happiness = 100;
-    private int sleep = 100;
+    #region Singleton
+    private static PlayerStats instance;
+
+    public static PlayerStats Instance
+    {
+        get { return instance; }
+    }
+
+    // Método para inicializar la instancia del Singleton
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+    #endregion
+
+    private float sanity = 100;
+    private float hunger = 100;
+    private float happiness = 100;
+    private float sleep = 100;
     private float money = 1000.0f;
 
-    public int GetSanity() { return sanity; }
-    public int GetHunger() { return hunger; }
-    public int GetHappiness() { return happiness; }
+    public float GetSanity() { return sanity; }
+    public float GetHunger() { return hunger; }
+    public float GetHappiness() { return happiness; }
     public float GetMoney() { return money; }
-    public int GetSleep() { return sleep; }
+    public float GetSleep() { return sleep; }
 
-    public void SetSanity(int value){ sanity = value; }
-    public void SetHunger(int value) { hunger = value; }
-    public void SetHappiness(int value) { happiness = value; }
-    public void SetMoney(float value) { money = value; }
-    public void SetSleep(int value) { sleep = value; }
+    public void SetSanity(float value)
+    {
+        sanity += value;
+        if (sanity + value >= 100)
+        {
+            sanity = 100;
+        }
+    }
+    public void SetHunger(float value) 
+    { 
+        hunger += value; 
+        if (hunger + value >= 100)
+        {
+            hunger = 100;
+        }
+    }
+    public void SetHappiness(float value) 
+    { 
+        happiness += value; 
+        if (happiness + value >= 100)
+        {
+            happiness = 100;
+        }
+    }
+    public void SetMoney(float value) { money += value; }
+    public void SetSleep(float value) 
+    { 
+        sleep += value; 
+        if (sleep + value >= 100)
+        {
+            sleep = 100;
+        }
+    }
 
 
 
-    // Start is called before the first frame update
     void Start()
     {
         InitializeStats();
@@ -42,5 +90,14 @@ public class PlayerStats : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void DrainStats(float drainRate)
+    {
+        hunger -= drainRate*1f;
+        happiness -= drainRate*0.9f;
+        sanity -= drainRate*0.9f;
+        sleep -= drainRate*0.8f;
+        UIManager.Instance.RefreshUI();
     }
 }

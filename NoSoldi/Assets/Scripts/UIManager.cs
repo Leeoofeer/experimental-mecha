@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 
 public class UIManager : MonoBehaviour
@@ -27,27 +28,63 @@ public class UIManager : MonoBehaviour
     }
     #endregion
 
+
+    public TextMeshProUGUI daysCounter;
+    public TextMeshProUGUI moneyCounter;
+    public Slider hungerCounter;
+    public Slider happinessCounter;
+    public Slider sanityCounter;
+    public Slider sleepCounter;
+
     void Start()
     {
         Screen.SetResolution(1920, 1080, true);
+        RefreshUI();
+    }
+
+    public void RefreshUI()
+    {
+        UpdateDays();
+        UpdateMoney();
+        UpdateHunger();
+        UpdateHappiness();
+        UpdateSanity();
+        UpdateSleep();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        UpdateDays();
     }
 
-    public void UpdateTimeUI(float hours)
+    public void UpdateDays()
     {
-        // Obtener el texto del reloj
-        Text clockText = GameObject.Find("ClockText").GetComponent<Text>();
+        daysCounter.text = "Day: " + GameTimeManager.Instance.GetGameTimeDays().ToString();
+    }
 
-        // Convertir las horas a un formato de 24 horas
-        int hoursInt = (int)hours;
-        int minutes = (int)((hours - hoursInt) * 60);
+    public void UpdateMoney()
+    {
+        moneyCounter.text = "Cash: " + PlayerStats.Instance.GetMoney();
+    }
 
-        // Actualizar el texto del reloj
-        clockText.text = hoursInt.ToString("00") + ":" + minutes.ToString("00");
+    public void UpdateHunger()
+    {
+        hungerCounter.value = PlayerStats.Instance.GetHunger() / 100f;
+    }
+
+    public void UpdateHappiness()
+    {
+        happinessCounter.value = PlayerStats.Instance.GetHappiness() / 100f;
+    }
+
+    public void UpdateSanity()
+    {
+        sanityCounter.value = PlayerStats.Instance.GetSanity() / 100f;
+    }
+
+    public void UpdateSleep()
+    {
+        sleepCounter.value = PlayerStats.Instance.GetSleep() / 100f;
     }
 }

@@ -4,12 +4,14 @@ public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 5f;
     public float smoothRotationSpeed = 10f;
+    private ActionDetector actionDetector;
 
     private Rigidbody rb;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        actionDetector = GetComponent<ActionDetector>();
     }
 
     void Update()
@@ -33,6 +35,7 @@ public class PlayerController : MonoBehaviour
 
     void Interact()
     {
-        Debug.Log("Interactuando...");
+        actionDetector.Interact();
+        actionDetector.GetObjectName();
     }
 }
