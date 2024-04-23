@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SocialAntro : MonoBehaviour
+public class Work : MonoBehaviour
 {
     private float price = 0.0f;
     private int sleepness = 0;
@@ -23,32 +23,33 @@ public class SocialAntro : MonoBehaviour
 
     void InitializeHouse()
     {
-        price = 200f;
+        price = 900f;
         sleepness = -30;
-        happiness = 20;
-        fullness = 15;
-        sanity = 30;
+        happiness = -20;
+        fullness = 10;
+        sanity = -15;
     }
 
+    
     public void ConsumeProduct()
     {
-        if (PlayerStats.Instance.GetMoney() > price*-1 && PlayerStats.Instance.GetSleep() > sleepness*-1)
+        if (PlayerStats.Instance.GetSleep() > sleepness*-1 && PlayerStats.Instance.GetHappiness() > happiness * -1 && PlayerStats.Instance.GetSanity() > sanity * -1)
         {
-            return;
+            
+            GameTimeManager.Instance.FastForward(8);
+            StartCoroutine(ReturnFastForward());
         }
         else
-        {
-            PlayerStats.Instance.SetMoney(-price);
-            UIManager.Instance.UpdateMoney();
-            GameTimeManager.Instance.FastForward(4);
-            StartCoroutine(ReturnFastForward());
+        {            
+            return;
         }
 
     }
 
     IEnumerator ReturnFastForward()
     {
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(8);
+        PlayerStats.Instance.SetMoney(price);
         PlayerStats.Instance.SetSleep(sleepness);
         PlayerStats.Instance.SetHappiness(happiness);
         PlayerStats.Instance.SetSanity(sanity);
@@ -57,5 +58,7 @@ public class SocialAntro : MonoBehaviour
         UIManager.Instance.UpdateHappiness();
         UIManager.Instance.UpdateSanity();
         UIManager.Instance.UpdateHunger();
+        UIManager.Instance.UpdateMoney();
+
     }
 }

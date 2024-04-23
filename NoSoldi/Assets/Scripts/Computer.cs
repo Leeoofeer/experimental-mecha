@@ -34,7 +34,7 @@ public class Computer : MonoBehaviour
 
     public void ConsumeProduct()
     {
-        if (PlayerStats.Instance.GetSleep() < sleepness*-1)
+        if (PlayerStats.Instance.GetSleep() < sleepness*-1 && PlayerStats.Instance.GetHunger() < hunger * -1 )
         {
             return;
         }

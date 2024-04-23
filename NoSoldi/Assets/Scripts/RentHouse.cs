@@ -23,7 +23,7 @@ public class RentHouse : MonoBehaviour
     void InitializeHouse()
     {
         price = 500f;
-        sleepness = 80;
+        sleepness = 60;
         happiness = 40;
         sanity = 30;
     }
@@ -36,10 +36,10 @@ public class RentHouse : MonoBehaviour
         }
         else
         {
-            UIManager.Instance.UpdateMoney();
             PlayerStats.Instance.SetMoney(-price);
+            UIManager.Instance.UpdateMoney();
 
-            GameTimeManager.Instance.FastForward(8);
+            GameTimeManager.Instance.FastForward(6);
             StartCoroutine(ReturnFastForward());
             
             
@@ -49,7 +49,7 @@ public class RentHouse : MonoBehaviour
 
     IEnumerator ReturnFastForward()
     {
-        yield return new WaitForSeconds(8);
+        yield return new WaitForSeconds(6);
         PlayerStats.Instance.SetSleep(sleepness);
         PlayerStats.Instance.SetHappiness(happiness);
         PlayerStats.Instance.SetSanity(sanity);

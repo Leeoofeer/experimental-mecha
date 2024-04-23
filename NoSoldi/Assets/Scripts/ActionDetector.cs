@@ -44,6 +44,18 @@ public class ActionDetector : MonoBehaviour
             Computer computer = GameObject.Find("Computer").GetComponent<Computer>();
             
             computer.ConsumeProduct();
+        }else if (GetObjectName() == "HubTable")
+        {
+            Debug.Log("Interactuando con el Bar");
+            SocialAntro bed = GameObject.Find("HubTable").GetComponent<SocialAntro>();
+            
+            bed.ConsumeProduct();
+        }else if(GetObjectName() == "Work")
+        {
+            Debug.Log("Interactuando con el Work");
+            Work work = GameObject.Find("Work").GetComponent<Work>();
+            
+            work.ConsumeProduct();
         }
 
     }

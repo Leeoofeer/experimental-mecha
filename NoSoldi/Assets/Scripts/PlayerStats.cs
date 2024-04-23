@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerStats : MonoBehaviour
 {
@@ -30,6 +31,8 @@ public class PlayerStats : MonoBehaviour
     private float happiness = 100;
     private float sleep = 100;
     private float money = 1000.0f;
+
+    public GameObject player;
 
     public float GetSanity() { return sanity; }
     public float GetHunger() { return hunger; }
@@ -89,7 +92,11 @@ public class PlayerStats : MonoBehaviour
 
     void Update()
     {
-        
+        if (hunger <= 0 || happiness <= 0 || sanity <= 0 || sleep <= 0)
+        {
+            Debug.Log("Game Over");
+            player.SetActive(false);
+        }
     }
 
     public void DrainStats(float drainRate)
