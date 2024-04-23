@@ -40,30 +40,17 @@ public class Computer : MonoBehaviour
         }
         else
         {            
-            //PlayerStats.Instance.SetSleep(-sleepness);
+
             StartCoroutine(CambiarMaterialDespuesDe3Segundos());
             UIManager.Instance.RefreshUI();
-
+            PlayerStats.Instance.isPlaying = true;
             GameTimeManager.Instance.FastForward(3);
-            StartCoroutine(ReturnFastForward());
-
 
         }
 
     }
 
-    IEnumerator ReturnFastForward()
-    {
-        yield return new WaitForSeconds(3);
-        PlayerStats.Instance.SetSleep(sleepness);
-        PlayerStats.Instance.SetHappiness(happiness);
-        PlayerStats.Instance.SetSanity(sanity);
-        PlayerStats.Instance.SetHunger(hunger);
-        UIManager.Instance.UpdateSleep();
-        UIManager.Instance.UpdateHappiness();
-        UIManager.Instance.UpdateSanity();
-        UIManager.Instance.UpdateHunger();
-    }
+    
 
     IEnumerator CambiarMaterialDespuesDe3Segundos()
     {        
@@ -75,5 +62,7 @@ public class Computer : MonoBehaviour
 
         // Volver al material original
         rend.material = materialOriginal;
+        PlayerStats.Instance.isPlaying = false;
+
     }
 }

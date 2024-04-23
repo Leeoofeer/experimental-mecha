@@ -36,7 +36,7 @@ public class Work : MonoBehaviour
         if (PlayerStats.Instance.GetSleep() > sleepness*-1 && PlayerStats.Instance.GetHappiness() > happiness * -1 && PlayerStats.Instance.GetSanity() > sanity * -1)
         {
             
-            GameTimeManager.Instance.FastForward(8);
+            GameTimeManager.Instance.FastForward(6);
             StartCoroutine(ReturnFastForward());
         }
         else
@@ -48,16 +48,8 @@ public class Work : MonoBehaviour
 
     IEnumerator ReturnFastForward()
     {
-        yield return new WaitForSeconds(8);
+        yield return new WaitForSeconds(6);
         PlayerStats.Instance.SetMoney(price);
-        PlayerStats.Instance.SetSleep(sleepness);
-        PlayerStats.Instance.SetHappiness(happiness);
-        PlayerStats.Instance.SetSanity(sanity);
-        PlayerStats.Instance.SetHunger(fullness);
-        UIManager.Instance.UpdateSleep();
-        UIManager.Instance.UpdateHappiness();
-        UIManager.Instance.UpdateSanity();
-        UIManager.Instance.UpdateHunger();
         UIManager.Instance.UpdateMoney();
 
     }

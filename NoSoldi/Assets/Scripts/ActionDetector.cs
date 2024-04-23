@@ -47,9 +47,9 @@ public class ActionDetector : MonoBehaviour
         }else if (GetObjectName() == "HubTable")
         {
             Debug.Log("Interactuando con el Bar");
-            SocialAntro bed = GameObject.Find("HubTable").GetComponent<SocialAntro>();
-            
-            bed.ConsumeProduct();
+            SocialAntro table = GameObject.Find("HubTable").GetComponent<SocialAntro>();
+
+            table.ConsumeProduct();
         }else if(GetObjectName() == "Work")
         {
             Debug.Log("Interactuando con el Work");

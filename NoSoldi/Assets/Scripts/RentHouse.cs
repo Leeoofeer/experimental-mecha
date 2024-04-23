@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class RentHouse : MonoBehaviour
 {
-    private float price = 0.0f;
+    private float price = 0.0f;   
     private int sleepness = 0;
     private int happiness = 0;
+    private int fullness = 0;
     private int sanity = 0;
 
     public float GetPrice() { return price; }
     public int GetFullness() { return sleepness; }
     public int GetHappiness() { return happiness; }
     public int GetSanity() { return sanity; }
+  
 
 
     void Start()
@@ -22,10 +24,11 @@ public class RentHouse : MonoBehaviour
 
     void InitializeHouse()
     {
-        price = 500f;
-        sleepness = 60;
-        happiness = 40;
-        sanity = 30;
+        price = 500f;     
+        sleepness = -30;
+        happiness = -20;
+        fullness = 10;
+        sanity = -15;
     }
 
     public void ConsumeProduct()
@@ -36,12 +39,12 @@ public class RentHouse : MonoBehaviour
         }
         else
         {
+            PlayerStats.Instance.isSleeping = true;
             PlayerStats.Instance.SetMoney(-price);
             UIManager.Instance.UpdateMoney();
 
             GameTimeManager.Instance.FastForward(6);
-            StartCoroutine(ReturnFastForward());
-            
+            StartCoroutine(ReturnFastForward());          
             
         }
 
@@ -49,12 +52,8 @@ public class RentHouse : MonoBehaviour
 
     IEnumerator ReturnFastForward()
     {
-        yield return new WaitForSeconds(6);
-        PlayerStats.Instance.SetSleep(sleepness);
-        PlayerStats.Instance.SetHappiness(happiness);
-        PlayerStats.Instance.SetSanity(sanity);
-        UIManager.Instance.UpdateSleep();
-        UIManager.Instance.UpdateHappiness();
-        UIManager.Instance.UpdateSanity();
+        yield return new WaitForSeconds(6);       
+        PlayerStats.Instance.isSleeping = false;
+
     }
 }

@@ -99,12 +99,40 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
+    public bool isSleeping;
+    public bool isPlaying;
+    public bool isDrinking;
+
     public void DrainStats(float drainRate)
     {
-        hunger -= drainRate*1f;
-        happiness -= drainRate*0.9f;
-        sanity -= drainRate*0.9f;
-        sleep -= drainRate*0.8f;
+        
+        if (isSleeping)
+        {
+            sleep += drainRate * 0.9f;
+            hunger -= drainRate * 1f;
+            happiness += drainRate * 0.9f;
+            sanity += drainRate * 0.9f;
+        }else if (isPlaying)
+        {
+            sleep -= drainRate * 0.7f;
+            hunger -= drainRate * 1f;
+            happiness += drainRate * 0.9f;
+            sanity += drainRate * 0.9f;
+        }else if (isDrinking)
+        {
+            sleep -= drainRate * 0.9f;
+            hunger += drainRate * 0.4f;
+            happiness += drainRate * 0.9f;
+            sanity += drainRate * 0.9f;
+        }
+        else
+        {
+            sleep -= drainRate * 0.8f;
+            hunger -= drainRate * 1f;
+            happiness -= drainRate * 0.9f;
+            sanity -= drainRate * 0.9f;
+        }
+
         UIManager.Instance.RefreshUI();
     }
 }

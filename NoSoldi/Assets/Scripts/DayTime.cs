@@ -16,7 +16,7 @@ public class DayTime : MonoBehaviour
     void Update()
     {
         // Obtener el tiempo transcurrido en horas y convertirlo a un valor entre 0 y 1
-        float normalizedTime = (GameTimeManager.Instance.GetGameTimeHours() / 24f);   
+        float normalizedTime = (GameTimeManager.Instance.GetGameTimeHours() / GameTimeManager.Instance.dayDuration);   
         // Calcular el ángulo de rotación en función del tiempo transcurrido
         float rotationAngle = normalizedTime * 360f;
         // Rotar la imagen

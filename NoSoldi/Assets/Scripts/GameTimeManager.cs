@@ -44,10 +44,15 @@ public class GameTimeManager : MonoBehaviour
     void Start()
     {
         originalTimeScale = timeScale;
+
+        // Nuevo Time System
+        advanceTimer = dayDuration;
     }
 
     void Update()
     {
+        AdvanceTime();
+        /*
         if (Time.timeScale > 0)
         {
             // Incrementar el tiempo acumulado en el juego
@@ -70,6 +75,7 @@ public class GameTimeManager : MonoBehaviour
         timeScaleText.text = "Time Scale: " + timeScale;
         originalTimeScaleText.text = "O. Scale: " + originalTimeScale;
         accumulatedTimeText.text = "Accumulated Time: " + accumulatedTime;
+        */
     }
 
     public float GetGameTimeHours()
@@ -95,8 +101,8 @@ public class GameTimeManager : MonoBehaviour
 
     public void FastForward(float timeAmount)
     {
-        isFastForward = true;
-        SetTimeScale(timeAmount);
+        isFastForwarding = true;
+        //SetTimeScale(timeAmount);
         ChangeScriptsState(false);
         StartCoroutine(ReturnToGameplay(timeAmount));
     }    
@@ -104,9 +110,9 @@ public class GameTimeManager : MonoBehaviour
     IEnumerator ReturnToGameplay(float timeAmount)
     {
         yield return new WaitForSeconds(timeAmount);
-        SetTimeScale(originalTimeScale);
+        //SetTimeScale(originalTimeScale);
         ChangeScriptsState(true);
-        isFastForward = false;
+        isFastForwarding = false;
     }
 
     private void ChangeScriptsState(bool nextState)
@@ -115,6 +121,32 @@ public class GameTimeManager : MonoBehaviour
         actionDetector.enabled = nextState;
     }
 
-    
+
+    public float dayDuration = 240f;
+    public float fastForwardSpeed = 10f;
+    public bool isFastForwarding = false;
+    public delegate void OnTimeAdvanceHandler();
+    public event OnTimeAdvanceHandler OnTimeAdvance;
+    float advanceTimer;
+    public void AdvanceTime()
+    {
+        advanceTimer -= Time.deltaTime * (isFastForwarding? fastForwardSpeed:1f);
+        float percentageOfDay = 1f - (advanceTimer / dayDuration); // Porcentaje del día transcurrido
+        gameTimeHours = percentageOfDay * 24f; // Calcula las horas basadas en el porcentaje del día
+
+        //gameTimeHours = ((dayDuration-advanceTimer)) % 24; // 24 horas en un día
+        PlayerStats.Instance.DrainStats((isFastForwarding ? fastForwardSpeed : 1f)*Time.deltaTime);
+
+        if (advanceTimer <= 0)
+        {
+            advanceTimer += dayDuration;
+            gameTimeDays++;
+            OnTimeAdvance?.Invoke();
+        }
+        timeScaleText.text = "isFastForwarding: " + isFastForwarding;
+        originalTimeScaleText.text = "dayDuration: " + dayDuration;
+        accumulatedTimeText.text = "Tiempo restante del dia: " + advanceTimer;
+    }
+
 }
 
