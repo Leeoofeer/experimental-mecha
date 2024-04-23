@@ -9,6 +9,8 @@ public class SocialAntro : MonoBehaviour
     private int happiness = 0;
     private int fullness = 0;
     private int sanity = 0;
+    public GameObject insuficientStat;
+
 
     public float GetPrice() { return price; }
     public int GetFullness() { return sleepness; }
@@ -33,7 +35,7 @@ public class SocialAntro : MonoBehaviour
     public void ConsumeProduct()
     {
 
-        if (PlayerStats.Instance.GetMoney() > price && PlayerStats.Instance.GetSleep() > sleepness*-1)
+        if (PlayerStats.Instance.GetMoney() > price || PlayerStats.Instance.GetSleep() > sleepness*-1)
         {
             PlayerStats.Instance.SetMoney(-price);
             UIManager.Instance.UpdateMoney();
@@ -43,9 +45,17 @@ public class SocialAntro : MonoBehaviour
         }
         else
         {
+            insuficientStat.SetActive(true);
+            StartCoroutine(DeactivateGO());
             return;
         }
 
+    }
+
+    IEnumerator DeactivateGO()
+    {
+        yield return new WaitForSeconds(3);
+        insuficientStat.SetActive(false);
     }
     IEnumerator ReturnFastForward()
     {

@@ -9,6 +9,8 @@ public class Work : MonoBehaviour
     private int happiness = 0;
     private int fullness = 0;
     private int sanity = 0;
+    public GameObject insuficientStat;
+
 
     public float GetPrice() { return price; }
     public int GetFullness() { return sleepness; }
@@ -33,17 +35,25 @@ public class Work : MonoBehaviour
     
     public void ConsumeProduct()
     {
-        if (PlayerStats.Instance.GetSleep() > sleepness*-1 && PlayerStats.Instance.GetHappiness() > happiness * -1 && PlayerStats.Instance.GetSanity() > sanity * -1)
+        if (PlayerStats.Instance.GetSleep() > sleepness*-1 || PlayerStats.Instance.GetHappiness() > happiness * -1 || PlayerStats.Instance.GetSanity() > sanity * -1)
         {
             
             GameTimeManager.Instance.FastForward(6);
             StartCoroutine(ReturnFastForward());
         }
         else
-        {            
+        {
+            insuficientStat.SetActive(true);
+            StartCoroutine(DeactivateGO());
             return;
         }
 
+    }
+
+    IEnumerator DeactivateGO()
+    {
+        yield return new WaitForSeconds(3);
+        insuficientStat.SetActive(false);
     }
 
     IEnumerator ReturnFastForward()

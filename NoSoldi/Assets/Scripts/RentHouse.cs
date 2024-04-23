@@ -9,6 +9,7 @@ public class RentHouse : MonoBehaviour
     private int happiness = 0;
     private int fullness = 0;
     private int sanity = 0;
+    public GameObject insuficientStat;
 
     public float GetPrice() { return price; }
     public int GetFullness() { return sleepness; }
@@ -27,14 +28,16 @@ public class RentHouse : MonoBehaviour
         price = 500f;     
         sleepness = -30;
         happiness = -20;
-        fullness = 10;
+        fullness = 50;
         sanity = -15;
     }
 
     public void ConsumeProduct()
     {
-        if (PlayerStats.Instance.GetMoney() < price)
+        if (PlayerStats.Instance.GetMoney() < price || PlayerStats.Instance.GetHunger() < fullness)
         {
+            insuficientStat.SetActive(true);
+            StartCoroutine(DeactivateGO());
             return;
         }
         else
@@ -48,6 +51,12 @@ public class RentHouse : MonoBehaviour
             
         }
 
+    }
+
+    IEnumerator DeactivateGO()
+    {
+        yield return new WaitForSeconds(3);
+        insuficientStat.SetActive(false);
     }
 
     IEnumerator ReturnFastForward()

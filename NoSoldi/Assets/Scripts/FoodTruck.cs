@@ -7,6 +7,8 @@ public class FoodTruck : MonoBehaviour
     private float price = 0.0f;
     private int fullness = 0;
     private int happiness = 0;
+    public GameObject insuficientStat;
+
 
     public float GetPrice() { return price; }
     public int GetFullness() { return fullness; }
@@ -24,11 +26,19 @@ public class FoodTruck : MonoBehaviour
         happiness = 10;
     }
 
+    IEnumerator DeactivateGO()
+    {
+        yield return new WaitForSeconds(3);
+        insuficientStat.SetActive(false);
+    }
+
     public void ConsumeProduct()
     {
         if (PlayerStats.Instance.GetMoney() < price)
         {
-            return;
+
+            insuficientStat.SetActive(true);
+            StartCoroutine(DeactivateGO());
         }
         else
         {

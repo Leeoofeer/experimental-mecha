@@ -95,7 +95,7 @@ public class PlayerStats : MonoBehaviour
         if (hunger <= 0 || happiness <= 0 || sanity <= 0 || sleep <= 0)
         {
             Debug.Log("Game Over");
-            player.SetActive(false);
+           Application.Quit();
         }
     }
 
@@ -132,6 +132,23 @@ public class PlayerStats : MonoBehaviour
             happiness -= drainRate * 0.9f;
             sanity -= drainRate * 0.9f;
         }
+        if (sleep >= 100)
+        {
+            sleep = 100;
+        }
+        if (hunger >= 100)
+        {
+            hunger = 100;
+        }
+        if (happiness >= 100)
+        {
+            happiness = 100;
+        }
+        if (sanity >= 100)
+        {
+            sanity = 100;
+        }
+
 
         UIManager.Instance.RefreshUI();
     }

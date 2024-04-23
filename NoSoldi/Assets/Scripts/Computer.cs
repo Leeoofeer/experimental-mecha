@@ -9,6 +9,8 @@ public class Computer : MonoBehaviour
     private int sanity = 0;
     private int hunger = 0;
 
+    public GameObject insuficientStat;
+
     public Material nuevoMaterial;
     private Material materialOriginal; 
     public Renderer rend; 
@@ -25,7 +27,7 @@ public class Computer : MonoBehaviour
 
     void InitializePC()
     {
-        sleepness = -10;
+        sleepness = -30;
         happiness = 40;
         sanity = 10;
         hunger = -20;
@@ -34,9 +36,11 @@ public class Computer : MonoBehaviour
 
     public void ConsumeProduct()
     {
-        if (PlayerStats.Instance.GetSleep() < sleepness*-1 && PlayerStats.Instance.GetHunger() < hunger * -1 )
+        if (PlayerStats.Instance.GetSleep() < sleepness*-1 || PlayerStats.Instance.GetHunger() < hunger * -1 )
         {
-            return;
+            insuficientStat.SetActive(true);
+            StartCoroutine(DeactivateGO());
+            
         }
         else
         {            
@@ -50,7 +54,11 @@ public class Computer : MonoBehaviour
 
     }
 
-    
+    IEnumerator DeactivateGO()
+    {
+        yield return new WaitForSeconds(3);
+        insuficientStat.SetActive(false);
+    }
 
     IEnumerator CambiarMaterialDespuesDe3Segundos()
     {        
