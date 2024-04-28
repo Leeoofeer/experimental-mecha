@@ -5,13 +5,12 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
    
 public class ImageClickHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
-    public Image enlargedImagePrefab; // Asigna la imagen grande que deseas mostrar
+    public Image enlargedImagePrefab; 
     private Image currentEnlargedImage;
     private bool isDragging = false;
     private RectTransform rectTransform;
     private Vector3 originalScale;
 
-    // Define los límites para cambiar el tamaño
     private const float enlargeThreshold = -59f;
     private const float originalThreshold = 68f;
 
