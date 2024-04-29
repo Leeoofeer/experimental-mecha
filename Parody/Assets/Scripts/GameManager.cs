@@ -136,8 +136,15 @@ public class GameManager : MonoBehaviour
         }
         if (wrongPeople >= 4)
         {
-            Application.Quit();
+            Debug.Log("Game Over");
+            despido.SetActive(true);
         }
+    }
+    public GameObject despido;
+
+    public void CerrarJuego()
+    {
+        Application.Quit();
     }
 
     bool CheckRequirements()
