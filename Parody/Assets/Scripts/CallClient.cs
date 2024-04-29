@@ -1,22 +1,69 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CallClient : MonoBehaviour
 {
+    #region Singleton
+    private static CallClient instance;
+    public static CallClient Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                Debug.LogError("CallClient no encontrado");
+                return null;
+            }
+            return instance;
+        }
+    }
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
+    #endregion
     public GameObject head;
     public GameObject torso;
     public Image dni;
+    public TextMeshProUGUI nombreDNI, nombreAntecedentes,nombreCV;
+
 
     public Sprite[] headSprites; 
     public Sprite[] torsoSprites; 
     bool isFake = false;
-   
+    public RandomizadorNombres randomizadorNombres;
+    string nombreCompleto;
+    public TextMeshProUGUI conAntecedentes, conEstudios, conExperiencia;
+
+    public Image fotoCV;
+
+    private void Start()
+    {
+        LlamarCliente();
+    }
 
     public void LlamarCliente()
     {
         RandomizeHead();
         RandomizeTorso();
         EnviarClienteAlGameManager();
+        SetearNombre();
+    }
+
+    void SetearNombre()
+    {
+        nombreCompleto = randomizadorNombres.ObtenerNombreCompletoAleatorio();
+        nombreDNI.text = nombreCompleto;
+        nombreAntecedentes.text = nombreCompleto;
+        nombreCV.text = nombreCompleto;
     }
 
     void RandomizeHead()
@@ -29,7 +76,7 @@ public class CallClient : MonoBehaviour
             if (headRenderer != null)
             {
                 headRenderer.sprite = headSprites[randomIndex];
-                FakeClient(headSprites[randomIndex]);
+                FakeClient(headSprites[randomIndex]);                
             }
         }
         else
@@ -40,10 +87,11 @@ public class CallClient : MonoBehaviour
 
     void FakeClient(Sprite face)
     {
-        int fakeIt = Random.Range(0, 4);
-        if (fakeIt <= 2)
+        int fakeIt = Random.Range(0, 8);
+        if (fakeIt <= 3)
         {
             dni.sprite = face;
+            fotoCV.sprite = face;
             isFake = false;
         }
         else
@@ -52,6 +100,7 @@ public class CallClient : MonoBehaviour
             if (dni != null)
             {                
                 dni.sprite = headSprites[randomInd];
+                fotoCV.sprite = headSprites[randomInd];
                 isFake = true;
             }
         }
@@ -81,10 +130,8 @@ public class CallClient : MonoBehaviour
 
     public void EnviarClienteAlGameManager()
     {
-        // Crear una instancia de DatosEmpleado
         Persona datos = CreateRandomPersona(); 
-
-        // Pasar los datos al GameManager
+        ArmarPapeles(datos);
         GameManager.Instance.RecibirDatos(datos);
     }
 
@@ -97,6 +144,13 @@ public class CallClient : MonoBehaviour
         bool tieneEstudios = Random.value > 0.5f;
 
         return new Persona(coincideFoto, tieneExperiencia, tieneAntecedentes, tieneEstudios);
+    }
+
+    void ArmarPapeles(Persona persona)
+    {
+        conAntecedentes.text = persona.tieneAntecedentes ? "Si" : "No";
+        conEstudios.text = persona.tieneEstudios ? "Si tengo" : "No tengo";
+        conExperiencia.text = persona.tieneExperiencia ? "Si tengo" : "No tengo";
     }
 
 }
