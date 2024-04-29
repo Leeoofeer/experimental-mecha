@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         CheckGameDifficulty();
+        Screen.SetResolution(1280, 960, false);
     }
 
     
