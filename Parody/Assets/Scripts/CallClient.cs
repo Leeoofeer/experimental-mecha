@@ -45,17 +45,37 @@ public class CallClient : MonoBehaviour
 
     public Image fotoCV;
 
+    public GameObject curriculum, identidad,antecedentes;
+    Vector2 curriculumPos, identidadPos, antecedentesPos;
+
+
+
     private void Start()
     {
+        curriculumPos = curriculum.transform.localPosition;
+        identidadPos = identidad.transform.localPosition;
+        antecedentesPos = antecedentes.transform.localPosition;
         LlamarCliente();
+        
     }
 
     public void LlamarCliente()
     {
+        RestablecerPosiciones();
         RandomizeHead();
         RandomizeTorso();
         EnviarClienteAlGameManager();
         SetearNombre();
+    }
+
+    void RestablecerPosiciones()
+    {
+        curriculum.transform.localPosition = curriculumPos;
+        identidad.transform.localPosition = identidadPos;
+        antecedentes.transform.localPosition = antecedentesPos;
+        curriculum.transform.localScale = Vector3.one;
+        identidad.transform.localScale = Vector3.one;
+        antecedentes.transform.localScale = Vector3.one;
     }
 
     void SetearNombre()
