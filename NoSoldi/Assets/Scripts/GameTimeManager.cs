@@ -43,11 +43,13 @@ public class GameTimeManager : MonoBehaviour
 
     void Start()
     {
+        SetTimeScale(10f);
         originalTimeScale = timeScale;
 
         // Nuevo Time System
         advanceTimer = dayDuration;
     }
+
 
     void Update()
     {
