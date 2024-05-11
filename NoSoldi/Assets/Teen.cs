@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Child : MonoBehaviour
+public class Teen : MonoBehaviour
 {
 
     void Start()
     {
-        InvokeRepeating("MaitainResources", 0, 1);
-        InvokeRepeating("DoItFast",0,15);
+        InvokeRepeating("MaitainResources", 0, 10);
+        InvokeRepeating("DoItFast", 15, 60);
     }
 
     void Update()
     {
-        if(GameTimeManager.Instance.GetGameTimeDays() >= 3)
+        if (GameTimeManager.Instance.GetGameTimeDays() >= 3)
         {
             foreach (var singleton in FindObjectsOfType<GameManager>())
             {
@@ -35,7 +35,7 @@ public class Child : MonoBehaviour
             {
                 Destroy(singleton.gameObject);
             }
-            SceneManager.LoadScene(2);
+            SceneManager.LoadScene(3);
         }
     }
 
@@ -43,14 +43,13 @@ public class Child : MonoBehaviour
     {
         GameTimeManager.Instance.isFastForwarding = true;
 
-    }    
+    }
 
 
     void MaitainResources()
     {
-        PlayerStats.Instance.SetHunger(100);
         PlayerStats.Instance.SetSanity(100);
-        PlayerStats.Instance.SetMoney(10000);
+        PlayerStats.Instance.SetMoney(500);
     }
 
 
