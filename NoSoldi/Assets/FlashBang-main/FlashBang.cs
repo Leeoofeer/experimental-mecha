@@ -15,6 +15,8 @@ public class FlashBang : MonoBehaviour
         WhiteImage = GameObject.FindGameObjectWithTag("WhiteImage").GetComponent<Image>();
         WhiteNoise = GameObject.FindGameObjectWithTag("WhiteNoise").GetComponent<AudioSource>();
         Bang = GameObject.FindGameObjectWithTag("Bang").GetComponent<AudioSource>();
+        Screen.SetResolution(1280, 720, false);
+
     }
 
     public void Flash()

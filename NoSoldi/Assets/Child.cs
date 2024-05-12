@@ -9,12 +9,12 @@ public class Child : MonoBehaviour
     void Start()
     {
         InvokeRepeating("MaitainResources", 0, 1);
-        InvokeRepeating("DoItFast",0,15);
+        InvokeRepeating("DoItFast",5,15);
     }
 
     void Update()
     {
-        if(GameTimeManager.Instance.GetGameTimeDays() >= 3)
+        if(GameTimeManager.Instance.GetGameTimeDays() >= 1)
         {
             foreach (var singleton in FindObjectsOfType<GameManager>())
             {

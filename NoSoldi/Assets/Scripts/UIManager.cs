@@ -38,7 +38,7 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        Screen.SetResolution(1920, 1080, true);
+        Screen.SetResolution(1280, 720, false);
         RefreshUI();
     }
 

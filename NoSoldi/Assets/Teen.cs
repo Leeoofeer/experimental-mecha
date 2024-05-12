@@ -14,7 +14,7 @@ public class Teen : MonoBehaviour
 
     void Update()
     {
-        if (GameTimeManager.Instance.GetGameTimeDays() >= 3)
+        if (GameTimeManager.Instance.GetGameTimeDays() >= 1)
         {
             foreach (var singleton in FindObjectsOfType<GameManager>())
             {
