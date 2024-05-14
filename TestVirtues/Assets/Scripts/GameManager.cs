@@ -4,6 +4,25 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    #region Singleton
+    private static GameManager _instance;
+
+    public static GameManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                GameObject singletonObject = new GameObject("GameManager");
+                _instance = singletonObject.AddComponent<GameManager>();
+                DontDestroyOnLoad(singletonObject);
+            }
+            return _instance;
+        }
+    }
+    #endregion
+
+
     int karmaScore = 0;
     
     // Start is called before the first frame update
@@ -22,6 +41,7 @@ public class GameManager : MonoBehaviour
     public void AddKarma(int karma)
     {
         karmaScore += karma;
+        Debug.Log("Karma: " + karmaScore);
     }
 
     public void NextLevel()

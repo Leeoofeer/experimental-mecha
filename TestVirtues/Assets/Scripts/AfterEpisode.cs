@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WalkingEpisode : MonoBehaviour
+public class AfterEpisode : MonoBehaviour
 {
     SceneManager sceneManager;
     private SelectableOption[] options;
@@ -12,34 +12,34 @@ public class WalkingEpisode : MonoBehaviour
     private GameObject disagreeButton;
     [SerializeField]
     private TextMeshProUGUI text;
-    
+
     void Start()
     {
         sceneManager = GameObject.Find("SceneManager").GetComponent<SceneManager>();
-        options = new SelectableOption[5];        
-        options[0] = new SelectableOption((new string[] { "you decided to grab the money that was in", " ", "and discard the purse on a near trash bin" }), -2);
-        options[1] = new SelectableOption(new string[] { "you decided to grab the money that was in", " ", "and left the purse where it was" }, -1);
-        options[2] = new SelectableOption(new string[] {  "you decided to not grab the money that was", " ", "in and left the purse where it was" }, 0);
-        options[3] = new SelectableOption(new string[] {  "you decided to grab the purse and take it", " ", "to the nearby police station" }, +1);
-        options[4] = new SelectableOption(new string[] { "you saw a mobile number in it and called", " ", "the owner to return the purse" }, +2);
+        options = new SelectableOption[5];
+        options[2] = new SelectableOption(new string[] { "you decided to cover his shift tonight", " ", "and not go out for drinks" }, -2);
+        options[0] = new SelectableOption(new string[] { "you decide to tell your boss that you", " ", "want to take your coworker shift" }, -1);
+        options[1] = new SelectableOption(new string[] { "you told your coworker that you cant", " ", "and you head to the bar" }, 0);        
+        options[3] = new SelectableOption(new string[] { "you suggest your coworker to tell your", " ", "boss to not do the shift" }, +1);
+        options[4] = new SelectableOption(new string[] { "you helped your coworker to finish his", " ", "pending work so he leaves early" }, +2);
 
 
         SceneManager sceneManagerComponent2 = this.gameObject.AddComponent<SceneManager>();
-        sceneManagerComponent2.Data = new string[] { "you finish working and decided to walk", " ", "towards your home after some blocks", " ", "you found a lost purse on the street", " ", "it seems to be nobody on your street", " " };
+        sceneManagerComponent2.Data = new string[] { "you finish working and decided to go out", " ", "for drinks with your coworkers ", " ", "then a colleague ask you to cover", " ", "his nightshift tonight", " " };
         sceneManagerComponent2.letter = sceneManager.letter;
         sceneManagerComponent2.cursor = sceneManager.cursor;
         sceneManagerComponent2.typeSound = sceneManager.typeSound;
         sceneManagerComponent2.endOfLineSound = sceneManager.endOfLineSound;
         sceneManagerComponent2.characters = sceneManager.characters;
         sceneManagerComponent2.showCursor = false;
-        
+
         StartCoroutine(GiveOption());
 
     }
 
     public void AgreeButton()
     {
-        CreditKarma(options[newDialogueIndex].Karma);        
+        CreditKarma(options[newDialogueIndex].Karma);
     }
 
     int newDialogueIndex = 0;
@@ -74,7 +74,7 @@ public class WalkingEpisode : MonoBehaviour
             disagreeButton.GetComponent<Image>().enabled = false;
             text.text = "NO MORE OPTIONS!";
         }
-        
+
     }
 
     IEnumerator GiveOption()
@@ -93,24 +93,24 @@ public class WalkingEpisode : MonoBehaviour
         newDialogueIndex = 0;
         CreateDialogOption();
     }
-   
+
     public void CreditKarma(int karma)
     {
         GameManager.Instance.AddKarma(karma);
     }
-     int auxKarma;
-    
+    int auxKarma;
+
     public int SelectRandomOption()
     {
         if (options.Length > 0)
         {
             int randomIndex = Random.Range(0, options.Length);
             auxKarma = options[randomIndex].Karma;
-            
+
             if (options.Length <= 0)
             {
-               // disagreeButton.SetActive(false);
-               disagreeButton.GetComponent<Button>().interactable = false;
+                // disagreeButton.SetActive(false);
+                disagreeButton.GetComponent<Button>().interactable = false;
                 disagreeButton.GetComponent<Image>().enabled = false;
                 text.text = "NO MORE OPTIONS!";
             }

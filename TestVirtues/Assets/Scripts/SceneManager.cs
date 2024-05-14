@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SceneManager : MonoBehaviour
@@ -18,7 +19,7 @@ public class SceneManager : MonoBehaviour
     [SerializeField]
     public Sprite[] characters;
 
-    Vector2 startPos = new Vector2(0f, 3.6f);
+    public Vector2 startPos = new Vector2(0f, 3.6f);
     Vector2 pos;
     readonly float lineSpacing = 0.5f;   
     readonly float charSpacing = 0.35f;
@@ -35,7 +36,7 @@ public class SceneManager : MonoBehaviour
     {
         pos = startPos;
         audioPlayer = GetComponent<AudioSource>();
-       StartCoroutine(PrintOut(Data));
+       StartCoroutine(PrintOut(Data, showCursor));
     }
 
 
@@ -44,8 +45,12 @@ public class SceneManager : MonoBehaviour
     {
         //StartCoroutine(PrintOut(newData));
     }
-    
-    private IEnumerator PrintOut(string[] data)
+
+    public bool showCursor = true;
+
+    List<GameObject> instantiatedLetters = new List<GameObject>();
+
+    private IEnumerator PrintOut(string[] data, bool showCursor)
     {
         int charToPrint;
         Vector2 lastPos = new Vector2(0, 0);
@@ -62,9 +67,11 @@ public class SceneManager : MonoBehaviour
                 {
                     spriteChar = Instantiate(letter, pos, Quaternion.identity);
                     spriteChar.GetComponent<SpriteRenderer>().sprite = characters[charToPrint];
+                    instantiatedLetters.Add(spriteChar);
                     spriteCursor.transform.position = pos + new Vector2(charSpacing, 0);
                     audioPlayer.PlayOneShot(typeSound, 1f);
-                    yield return new WaitForSeconds(Random.Range(0.05f, 0.35f));    // Min/max random delay between characters
+                    yield return new WaitForSeconds(Random.Range(0.05f, 0.25f));    // Min/max random delay between characters
+                    //yield return new WaitForSeconds(Random.Range(0.01f, 0.01f));    
                 }
                 pos.x += charSpacing; // testnumber for char width + char spacing
             }
@@ -72,11 +79,27 @@ public class SceneManager : MonoBehaviour
             pos.y -= lineSpacing;
             pos.x = startPos.x;
         }
-        spriteCursor.transform.position = lastPos;
+        if (!showCursor) // Decide si el cursor debe permanecer visible o no al finalizar la impresión
+        {
+            Destroy(spriteCursor);
+        }
+        else
+        {
+            spriteCursor.transform.position = lastPos;
+        }
     }
 
     int SelectChar(char selChar) 
     {
         return selChar - 97; 
+    }
+
+    public void ClearText()
+    {
+        foreach (GameObject letterObj in instantiatedLetters)
+        {
+            Destroy(letterObj); // Destruye cada letra instanciada
+        }
+        instantiatedLetters.Clear(); // Limpia la lista después de destruir todas las letras
     }
 }
