@@ -17,9 +17,9 @@ public class AfterEpisode : MonoBehaviour
     {
         sceneManager = GameObject.Find("SceneManager").GetComponent<SceneManager>();
         options = new SelectableOption[5];
-        options[2] = new SelectableOption(new string[] { "you decided to cover his shift tonight", " ", "and not go out for drinks" }, -2);
-        options[0] = new SelectableOption(new string[] { "you decide to tell your boss that you", " ", "want to take your coworker shift" }, -1);
-        options[1] = new SelectableOption(new string[] { "you told your coworker that you cant", " ", "and you head to the bar" }, 0);        
+        options[0] = new SelectableOption(new string[] { "you decided to cover his shift tonight", " ", "and not go out for drinks" }, -2);
+        options[1] = new SelectableOption(new string[] { "you decide to tell your boss that you", " ", "want to take your coworker shift" }, -1);
+        options[2] = new SelectableOption(new string[] { "you told your coworker that you cant", " ", "and you head to the bar" }, 0);        
         options[3] = new SelectableOption(new string[] { "you suggest your coworker to tell your", " ", "boss to not do the shift" }, +1);
         options[4] = new SelectableOption(new string[] { "you helped your coworker to finish his", " ", "pending work so he leaves early" }, +2);
 

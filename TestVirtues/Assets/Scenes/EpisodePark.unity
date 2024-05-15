@@ -251,8 +251,8 @@ GameObject:
   m_Component:
   - component: {fileID: 581801485}
   - component: {fileID: 581801484}
-  - component: {fileID: 581801486}
   - component: {fileID: 581801483}
+  - component: {fileID: 581801486}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -425,9 +425,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 581801482}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1189c60c7ab048b4ab3ff9e7cf06a898, type: 3}
+  m_Script: {fileID: 11500000, guid: f9633e4b5cf36fd4abdc4c49e61acf09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  disagreeButton: {fileID: 551071145661193508}
+  text: {fileID: 551071145661193507}
 --- !u!1 &920944481
 GameObject:
   m_ObjectHideFlags: 0
@@ -853,7 +855,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 551071146591845899, guid: 656782134db6e4e45abde83e764f3e2f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: WalkingEpisode, Assembly-CSharp
+      value: ParkEpisode, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 551071146591845899, guid: 656782134db6e4e45abde83e764f3e2f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -861,6 +863,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 656782134db6e4e45abde83e764f3e2f, type: 3}
+--- !u!114 &551071145661193507 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 551071146806367886, guid: 656782134db6e4e45abde83e764f3e2f, type: 3}
+  m_PrefabInstance: {fileID: 551071145661193506}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &551071145661193508 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 551071146591845893, guid: 656782134db6e4e45abde83e764f3e2f, type: 3}
+  m_PrefabInstance: {fileID: 551071145661193506}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3959621936878568901
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -883,18 +901,18 @@ PrefabInstance:
     - target: {fileID: 3959621937409138868, guid: d677cf0b2ccd89e4080848b418799df9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1504904323}
+      objectReference: {fileID: 581801486}
     - target: {fileID: 3959621937409138868, guid: d677cf0b2ccd89e4080848b418799df9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3959621937409138868, guid: d677cf0b2ccd89e4080848b418799df9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: NextLevel
+      value: AgreeButton
       objectReference: {fileID: 0}
     - target: {fileID: 3959621937409138868, guid: d677cf0b2ccd89e4080848b418799df9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: GameManager, Assembly-CSharp
+      value: ParkEpisode, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 3959621937409138868, guid: d677cf0b2ccd89e4080848b418799df9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
