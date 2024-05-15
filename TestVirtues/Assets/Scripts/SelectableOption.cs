@@ -1,9 +1,8 @@
 public class SelectableOption
 {
-    public string[] Data { get; set; } // Datos asociados a la opción
-    public int Karma { get; set; } // Puntuación de karma asociada a la opción
+    public string[] Data { get; set; } 
+    public int Karma { get; set; } 
 
-    // Constructor para inicializar la instancia
     public SelectableOption(string[] data, int karma)
     {
         Data = data;

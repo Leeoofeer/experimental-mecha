@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class WalkingEpisode : MonoBehaviour
 {
-    SceneManager sceneManager;
+    SceneManagerr sceneManager;
     private SelectableOption[] options;
     [SerializeField]
     private GameObject disagreeButton;
@@ -15,7 +15,7 @@ public class WalkingEpisode : MonoBehaviour
     
     void Start()
     {
-        sceneManager = GameObject.Find("SceneManager").GetComponent<SceneManager>();
+        sceneManager = GameObject.Find("SceneManager").GetComponent<SceneManagerr>();
         options = new SelectableOption[5];        
         options[0] = new SelectableOption((new string[] { "you decided to grab the money that was in", " ", "and discard the purse on a near trash bin" }), -2);
         options[1] = new SelectableOption(new string[] { "you decided to grab the money that was in", " ", "and left the purse where it was" }, -1);
@@ -24,7 +24,7 @@ public class WalkingEpisode : MonoBehaviour
         options[4] = new SelectableOption(new string[] { "you saw a mobile number in it and called", " ", "the owner to return the purse" }, +2);
 
 
-        SceneManager sceneManagerComponent2 = this.gameObject.AddComponent<SceneManager>();
+        SceneManagerr sceneManagerComponent2 = this.gameObject.AddComponent<SceneManagerr   >();
         sceneManagerComponent2.Data = new string[] { "you finish working and decided to walk", " ", "towards your home after some blocks", " ", "you found a lost purse on the street", " ", "it seems to be nobody on your street", " " };
         sceneManagerComponent2.letter = sceneManager.letter;
         sceneManagerComponent2.cursor = sceneManager.cursor;
@@ -45,7 +45,7 @@ public class WalkingEpisode : MonoBehaviour
     int newDialogueIndex = 0;
     private void CreateDialogOption()
     {
-        SceneManager sceneManagerComponent = gameObject.AddComponent<SceneManager>();
+        SceneManagerr sceneManagerComponent = gameObject.AddComponent<SceneManagerr>();
         newDialogueIndex = SelectRandomOption();
         sceneManagerComponent.Data = options[newDialogueIndex].Data;
         sceneManagerComponent.letter = sceneManager.letter;
@@ -63,7 +63,7 @@ public class WalkingEpisode : MonoBehaviour
     {
         if (options.Length > 0)
         {
-            var testComponent = gameObject.GetComponents<SceneManager>();
+            var testComponent = gameObject.GetComponents<SceneManagerr>();
             var getLastComponent = testComponent[testComponent.Length - 1];
             StartCoroutine(CleanText(getLastComponent));
         }
@@ -84,7 +84,7 @@ public class WalkingEpisode : MonoBehaviour
         CreateDialogOption();
     }
 
-    private IEnumerator CleanText(SceneManager sMc)
+    private IEnumerator CleanText(SceneManagerr sMc)
     {
         yield return new WaitForSeconds(0.1f);
         sMc.ClearText();

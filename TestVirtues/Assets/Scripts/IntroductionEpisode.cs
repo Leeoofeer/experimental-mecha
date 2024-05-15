@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-public class AfterEpisode : MonoBehaviour
+public class IntroductionEpisode : MonoBehaviour
 {
     SceneManagerr sceneManager;
     private SelectableOption[] options;
@@ -15,17 +16,19 @@ public class AfterEpisode : MonoBehaviour
 
     void Start()
     {
+        walkButton.SetActive(false);
+        drinkButton.SetActive(false);
         sceneManager = GameObject.Find("SceneManager").GetComponent<SceneManagerr>();
         options = new SelectableOption[5];
-        options[0] = new SelectableOption(new string[] { "you decided to cover his shift tonight", " ", "and not go out for drinks" }, -2);
-        options[1] = new SelectableOption(new string[] { "you decide to tell your boss that you", " ", "want to take your coworker shift" }, -1);
-        options[2] = new SelectableOption(new string[] { "you told your coworker that you cant", " ", "and you head to the bar" }, 0);        
-        options[3] = new SelectableOption(new string[] { "you suggest your coworker to tell your", " ", "boss to not do the shift" }, +1);
-        options[4] = new SelectableOption(new string[] { "you helped your coworker to finish his", " ", "pending work so he leaves early" }, +2);
+        options[0] = new SelectableOption((new string[] { "you decided to startTTTTTTTTTTTTTTTTTTTTT", " ", "walking towards homeTTTTTTTTTTTTTTTTTTTTT" }), -2);
+        options[1] = new SelectableOption(new string[] { "TTTTTTTTTTTTTTTTTTTTTyou decided to", " ", "TTTTTTTTTTTTTTTTTTTTTgo out for drinks" }, -1);
+        options[2] = new SelectableOption(new string[] { "you decided to not grab the money that was", " ", "in and left the purse where it was" }, 0);
+        options[3] = new SelectableOption(new string[] { "you decided to grab the purse and take it", " ", "to the nearby police station" }, +1);
+
 
 
         SceneManagerr sceneManagerComponent2 = this.gameObject.AddComponent<SceneManagerr>();
-        sceneManagerComponent2.Data = new string[] { "you finish working and decided to go out", " ", "for drinks with your coworkers ", " ", "then a colleague ask you to cover", " ", "his nightshift tonight", " " };
+        sceneManagerComponent2.Data = new string[] { "its leaving time and everybody is shutting", " ", "down their computers and start walking out", " ", "once you reach the building door", " "};
         sceneManagerComponent2.letter = sceneManager.letter;
         sceneManagerComponent2.cursor = sceneManager.cursor;
         sceneManagerComponent2.typeSound = sceneManager.typeSound;
@@ -34,7 +37,7 @@ public class AfterEpisode : MonoBehaviour
         sceneManagerComponent2.showCursor = false;
 
         StartCoroutine(GiveOption());
-
+        StartCoroutine(GiveOption2());        
     }
 
     public void AgreeButton()
@@ -46,16 +49,29 @@ public class AfterEpisode : MonoBehaviour
     private void CreateDialogOption()
     {
         SceneManagerr sceneManagerComponent = gameObject.AddComponent<SceneManagerr>();
-        newDialogueIndex = SelectRandomOption();
-        sceneManagerComponent.Data = options[newDialogueIndex].Data;
+        sceneManagerComponent.Data = options[0].Data;
         sceneManagerComponent.letter = sceneManager.letter;
         sceneManagerComponent.cursor = sceneManager.cursor;
         sceneManagerComponent.typeSound = sceneManager.typeSound;
         sceneManagerComponent.endOfLineSound = sceneManager.endOfLineSound;
         sceneManagerComponent.characters = sceneManager.characters;
-        sceneManagerComponent.startPos = new Vector2(0f, -0.15f);
+        sceneManagerComponent.startPos = new Vector2(-6.8f, -0.15f);
         sceneManagerComponent.showCursor = false;
-        RemoveOption(newDialogueIndex);
+
+    }
+
+    private void CreateDialogOption2()
+    {
+        SceneManagerr sceneManagerComponent = gameObject.AddComponent<SceneManagerr>();
+        sceneManagerComponent.startPos = new Vector2(-6.8f, -0.15f);
+        sceneManagerComponent.Data = options[1].Data;
+        sceneManagerComponent.letter = sceneManager.letter;
+        sceneManagerComponent.cursor = sceneManager.cursor;
+        sceneManagerComponent.typeSound = sceneManager.typeSound;
+        sceneManagerComponent.endOfLineSound = sceneManager.endOfLineSound;
+        sceneManagerComponent.characters = sceneManager.characters;
+        
+        sceneManagerComponent.showCursor = false;
 
     }
 
@@ -76,12 +92,22 @@ public class AfterEpisode : MonoBehaviour
         }
 
     }
-
+    public GameObject walkButton, drinkButton;
     IEnumerator GiveOption()
     {
         //(25);
-        yield return new WaitForSeconds(20f);
+        yield return new WaitForSeconds(16f);
         CreateDialogOption();
+        yield return new WaitForSeconds(6f);
+        walkButton.SetActive(true);
+    }
+    IEnumerator GiveOption2()
+    {
+        //(25);
+        yield return new WaitForSeconds(23f);
+        CreateDialogOption2();
+        yield return new WaitForSeconds(5f);
+        drinkButton.SetActive(true);
     }
 
     private IEnumerator CleanText(SceneManagerr sMc)
@@ -132,5 +158,14 @@ public class AfterEpisode : MonoBehaviour
         Destroy(cursor);
     }
 
+    public void LoadDrink()
+    {
+        SceneManager.LoadScene(3);
+    }
+    public void LoadWalk()
+    {
+        SceneManager.LoadScene(2);
+    }
 
 }
+

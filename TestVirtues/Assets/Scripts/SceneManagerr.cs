@@ -1,8 +1,9 @@
-ï»¿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class SceneManager : MonoBehaviour
+public class SceneManagerr : MonoBehaviour
 {
     [SerializeField]
     public GameObject letter;
@@ -21,14 +22,14 @@ public class SceneManager : MonoBehaviour
 
     public Vector2 startPos = new Vector2(0f, 3.6f);
     Vector2 pos;
-    readonly float lineSpacing = 0.5f;   
+    readonly float lineSpacing = 0.5f;
     readonly float charSpacing = 0.35f;
     char[] convertedString;
     GameObject spriteChar;
     GameObject spriteCursor;
     AudioSource audioPlayer;
 
-    string[] data = { "hello there", "lets talk a little bit", " ", "im going to ask you questions", "and you answer them" };
+    string[] data = { "hello there", "lets talk a little bit", " ", "im going to propose some decisions", "and you will agree or disagree", " " ," "," "," ", "you decided to start this game" };
 
     public string[] Data { get => data; set => data = value; }
 
@@ -36,10 +37,25 @@ public class SceneManager : MonoBehaviour
     {
         pos = startPos;
         audioPlayer = GetComponent<AudioSource>();
-       StartCoroutine(PrintOut(Data, showCursor));
+        StartCoroutine(PrintOut(Data, showCursor));
+        StartCoroutine(SpawnButtons());
+        if (b1 != null && b2 != null)
+        {
+            b1.SetActive(false);
+            b2.SetActive(false);
+        }
     }
 
-
+    public GameObject b1, b2;
+    IEnumerator SpawnButtons()
+    {
+        yield return new WaitForSeconds(17);
+        if (b1 != null && b2 != null)
+        {
+            b1.SetActive(true);
+            b2.SetActive(true);
+        }        
+    }
 
     public void UpdateData(string[] newData)
     {
@@ -79,7 +95,7 @@ public class SceneManager : MonoBehaviour
             pos.y -= lineSpacing;
             pos.x = startPos.x;
         }
-        if (!showCursor) // Decide si el cursor debe permanecer visible o no al finalizar la impresiÃ³n
+        if (!showCursor) // Decide si el cursor debe permanecer visible o no al finalizar la impresión
         {
             Destroy(spriteCursor);
         }
@@ -89,9 +105,9 @@ public class SceneManager : MonoBehaviour
         }
     }
 
-    int SelectChar(char selChar) 
+    int SelectChar(char selChar)
     {
-        return selChar - 97; 
+        return selChar - 97;
     }
 
     public void ClearText()
@@ -100,6 +116,8 @@ public class SceneManager : MonoBehaviour
         {
             Destroy(letterObj); // Destruye cada letra instanciada
         }
-        instantiatedLetters.Clear(); // Limpia la lista despuÃ©s de destruir todas las letras
+        instantiatedLetters.Clear(); // Limpia la lista después de destruir todas las letras
     }
+
+    
 }

@@ -250,7 +250,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 581801485}
-  - component: {fileID: 581801484}
+  - component: {fileID: 581801486}
   - component: {fileID: 581801483}
   m_Layer: 0
   m_Name: SceneManager
@@ -355,7 +355,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &581801484
+--- !u!4 &581801485
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 581801482}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &581801486
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -364,7 +379,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 581801482}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba20c975ab2d76148941a78526ac9405, type: 3}
+  m_Script: {fileID: 11500000, guid: e1921c183b9e60e4b9cfda5c8a2b143a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   letter: {fileID: 1967416100762871167, guid: c00c42048b43cba49842d963e76e9242, type: 3}
@@ -398,21 +413,8 @@ MonoBehaviour:
   - {fileID: -1408103309, guid: b81a5754c56f8a74980162a9604d9d75, type: 3}
   - {fileID: -1948508451, guid: b81a5754c56f8a74980162a9604d9d75, type: 3}
   - {fileID: 1583183054, guid: b81a5754c56f8a74980162a9604d9d75, type: 3}
---- !u!4 &581801485
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 581801482}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -3}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  startPos: {x: 0, y: 3.6}
+  showCursor: 1
 --- !u!1 &920944481
 GameObject:
   m_ObjectHideFlags: 0

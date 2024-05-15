@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class AbuseEpisode : MonoBehaviour
 {
-    SceneManager sceneManager;
+    SceneManagerr sceneManager;
     private SelectableOption[] options;
     [SerializeField]
     private GameObject disagreeButton;
@@ -15,17 +15,17 @@ public class AbuseEpisode : MonoBehaviour
 
     void Start()
     {
-        sceneManager = GameObject.Find("SceneManager").GetComponent<SceneManager>();
+        sceneManager = GameObject.Find("SceneManager").GetComponent<SceneManagerr>();
         options = new SelectableOption[5];
         options[0] = new SelectableOption(new string[] { "you decided to walk away and continue", " ", "towards your home to be safe" }, -2);
         options[1] = new SelectableOption(new string[] { "you decide to take you phone and start", " ", "recording what is happening here" }, -1);
         options[2] = new SelectableOption(new string[] { "you decided to look somebody near you", " ", "to ask for help and go back" }, 0);
         options[3] = new SelectableOption(new string[] { "you decided to run towards this situation", " ", "and try to stop the abuser" }, +1);
         options[4] = new SelectableOption(new string[] { "you shout that you are calling the police", " ", "and approached carefully to the scene" }, +2);
-        
 
 
-        SceneManager sceneManagerComponent2 = this.gameObject.AddComponent<SceneManager>();
+
+        SceneManagerr sceneManagerComponent2 = this.gameObject.AddComponent<SceneManagerr>();
         sceneManagerComponent2.Data = new string[] { "you continued walking towards your home", " ", "but you found on an alley a", " ", "person being abused in the dark", " ", "and nobody is near", " " };
         sceneManagerComponent2.letter = sceneManager.letter;
         sceneManagerComponent2.cursor = sceneManager.cursor;
@@ -46,7 +46,7 @@ public class AbuseEpisode : MonoBehaviour
     int newDialogueIndex = 0;
     private void CreateDialogOption()
     {
-        SceneManager sceneManagerComponent = gameObject.AddComponent<SceneManager>();
+        SceneManagerr sceneManagerComponent = gameObject.AddComponent<SceneManagerr>();
         newDialogueIndex = SelectRandomOption();
         sceneManagerComponent.Data = options[newDialogueIndex].Data;
         sceneManagerComponent.letter = sceneManager.letter;
@@ -64,7 +64,7 @@ public class AbuseEpisode : MonoBehaviour
     {
         if (options.Length > 0)
         {
-            var testComponent = gameObject.GetComponents<SceneManager>();
+            var testComponent = gameObject.GetComponents<SceneManagerr>();
             var getLastComponent = testComponent[testComponent.Length - 1];
             StartCoroutine(CleanText(getLastComponent));
         }
@@ -85,7 +85,7 @@ public class AbuseEpisode : MonoBehaviour
         CreateDialogOption();
     }
 
-    private IEnumerator CleanText(SceneManager sMc)
+    private IEnumerator CleanText(SceneManagerr sMc)
     {
         yield return new WaitForSeconds(0.1f);
         sMc.ClearText();

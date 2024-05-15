@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ParkEpisode : MonoBehaviour
 {
-    SceneManager sceneManager;
+    SceneManagerr sceneManager;
     private SelectableOption[] options;
     [SerializeField]
     private GameObject disagreeButton;
@@ -15,7 +15,7 @@ public class ParkEpisode : MonoBehaviour
 
     void Start()
     {
-        sceneManager = GameObject.Find("SceneManager").GetComponent<SceneManager>();
+        sceneManager = GameObject.Find("SceneManager").GetComponent<SceneManagerr   >();
         options = new SelectableOption[5];
         options[0] = new SelectableOption(new string[] { "you decided to hide and walk continue ", " ", "towards your home and ignore it" }, -2);
         options[1] = new SelectableOption(new string[] { "you decide to call his girlfriend and", " ", "tell her what is happening" }, -1);
@@ -25,7 +25,7 @@ public class ParkEpisode : MonoBehaviour
 
 
 
-        SceneManager sceneManagerComponent2 = this.gameObject.AddComponent<SceneManager>();
+        SceneManagerr sceneManagerComponent2 = this.gameObject.AddComponent<SceneManagerr>();
         sceneManagerComponent2.Data = new string[] { "and suddlenly you saw you friend cheating his", " ", "girlfriend with another unknown girl", " ", "then seems that both of them", " ", "starts walking towards you", " " };
         sceneManagerComponent2.letter = sceneManager.letter;
         sceneManagerComponent2.cursor = sceneManager.cursor;
@@ -46,7 +46,7 @@ public class ParkEpisode : MonoBehaviour
     int newDialogueIndex = 0;
     private void CreateDialogOption()
     {
-        SceneManager sceneManagerComponent = gameObject.AddComponent<SceneManager>();
+        SceneManagerr sceneManagerComponent = gameObject.AddComponent<SceneManagerr>();
         newDialogueIndex = SelectRandomOption();
         sceneManagerComponent.Data = options[newDialogueIndex].Data;
         sceneManagerComponent.letter = sceneManager.letter;
@@ -64,7 +64,7 @@ public class ParkEpisode : MonoBehaviour
     {
         if (options.Length > 0)
         {
-            var testComponent = gameObject.GetComponents<SceneManager>();
+            var testComponent = gameObject.GetComponents<SceneManagerr>();
             var getLastComponent = testComponent[testComponent.Length - 1];
             StartCoroutine(CleanText(getLastComponent));
         }
@@ -85,7 +85,7 @@ public class ParkEpisode : MonoBehaviour
         CreateDialogOption();
     }
 
-    private IEnumerator CleanText(SceneManager sMc)
+    private IEnumerator CleanText(SceneManagerr sMc)
     {
         yield return new WaitForSeconds(0.1f);
         sMc.ClearText();
