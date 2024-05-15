@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class WalkingEpisode : MonoBehaviour
@@ -25,7 +26,7 @@ public class WalkingEpisode : MonoBehaviour
 
 
         SceneManagerr sceneManagerComponent2 = this.gameObject.AddComponent<SceneManagerr   >();
-        sceneManagerComponent2.Data = new string[] { "you finish working and decided to walk", " ", "towards your home after some blocks", " ", "you found a lost purse on the street", " ", "it seems to be nobody on your street", " " };
+        sceneManagerComponent2.Data = new string[] { "you finish working and decided to walk", " ", "towards your home and after some blocks", " ", "you found a lost purse on the street", " ", "it seems to be nobody on your street", " " };
         sceneManagerComponent2.letter = sceneManager.letter;
         sceneManagerComponent2.cursor = sceneManager.cursor;
         sceneManagerComponent2.typeSound = sceneManager.typeSound;
@@ -39,7 +40,8 @@ public class WalkingEpisode : MonoBehaviour
 
     public void AgreeButton()
     {
-        CreditKarma(options[newDialogueIndex].Karma);        
+        CreditKarma(options[newDialogueIndex].Karma);
+        SceneManager.LoadScene("Menu 2");
     }
 
     int newDialogueIndex = 0;

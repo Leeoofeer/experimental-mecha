@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ParkEpisode : MonoBehaviour
 {
@@ -12,9 +13,14 @@ public class ParkEpisode : MonoBehaviour
     private GameObject disagreeButton;
     [SerializeField]
     private TextMeshProUGUI text;
+    [SerializeField]
+    private GameObject agreeButton;
+
 
     void Start()
     {
+        disagreeButton.SetActive(false);
+        agreeButton.SetActive(false);
         sceneManager = GameObject.Find("SceneManager").GetComponent<SceneManagerr   >();
         options = new SelectableOption[5];
         options[0] = new SelectableOption(new string[] { "you decided to hide and walk continue ", " ", "towards your home and ignore it" }, -2);
@@ -26,7 +32,7 @@ public class ParkEpisode : MonoBehaviour
 
 
         SceneManagerr sceneManagerComponent2 = this.gameObject.AddComponent<SceneManagerr>();
-        sceneManagerComponent2.Data = new string[] { "and suddlenly you saw you friend cheating his", " ", "girlfriend with another unknown girl", " ", "then seems that both of them", " ", "starts walking towards you", " " };
+        sceneManagerComponent2.Data = new string[] { "suddlenly you saw you friend cheating his", " ", "girlfriend with another unknown girl", " ", "then seems that both of them", " ", "starts walking towards you", " " };
         sceneManagerComponent2.letter = sceneManager.letter;
         sceneManagerComponent2.cursor = sceneManager.cursor;
         sceneManagerComponent2.typeSound = sceneManager.typeSound;
@@ -41,6 +47,27 @@ public class ParkEpisode : MonoBehaviour
     public void AgreeButton()
     {
         CreditKarma(options[newDialogueIndex].Karma);
+        if (PlayerPrefs.GetInt("Karma") == 0)
+        {
+            SceneManager.LoadScene("NeutralDecisions");
+        }
+        else if (PlayerPrefs.GetInt("Karma") > 0 && PlayerPrefs.GetInt("Karma") <= 2)
+        {
+            SceneManager.LoadScene("GoodDecisions");
+        }
+        else if (PlayerPrefs.GetInt("Karma") > 2)
+        {
+            SceneManager.LoadScene("BestDecisions");
+        }
+        else if (PlayerPrefs.GetInt("Karma") >= -2 && PlayerPrefs.GetInt("Karma") < 0)
+        {
+            SceneManager.LoadScene("NotThatBadDecision");
+        }
+        else if (PlayerPrefs.GetInt("Karma") < -2)
+        {
+            SceneManager.LoadScene("BadDecision1");
+        }
+
     }
 
     int newDialogueIndex = 0;
@@ -83,6 +110,9 @@ public class ParkEpisode : MonoBehaviour
         //(25);
         yield return new WaitForSeconds(20f);
         CreateDialogOption();
+        yield return new WaitForSeconds(6f);
+        agreeButton.SetActive(true);
+        disagreeButton.SetActive(true);
     }
 
     private IEnumerator CleanText(SceneManagerr sMc)

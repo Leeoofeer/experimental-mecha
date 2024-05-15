@@ -24,9 +24,33 @@ EditorBuildSettings:
     path: Assets/Scenes/EpisodePark.unity
     guid: d3461b311fc9da7488c3b6e1932376a8
   - enabled: 1
-    path: Assets/Scenes/MenuPathOne.unity
-    guid: fb5b30a28019c2a4eb19b87f2fc99cf9
+    path: Assets/Scenes/Menu 2.unity
+    guid: 4b6271b31003583459c2d3b9d0ae7190
   - enabled: 1
-    path: Assets/Scenes/MenuPathTwo.unity
-    guid: 965ccfdab3b17c84aa52f1f079ed6bd3
+    path: Assets/Scenes/Finals/DecisionsText/BadDecision1.unity
+    guid: 465b0a34e76c2594b89b6f6c8bfe7913
+  - enabled: 1
+    path: Assets/Scenes/Finals/DecisionsText/BestDecisions.unity
+    guid: e18a7a37060d886438c58ac6424d88fc
+  - enabled: 1
+    path: Assets/Scenes/Finals/DecisionsText/GoodDecisions.unity
+    guid: 25ecbcde7365c0140a58d3b7740e8ade
+  - enabled: 1
+    path: Assets/Scenes/Finals/DecisionsText/NeutralDecisions.unity
+    guid: e7e50c9c9990a8242a56158137c3ae0c
+  - enabled: 1
+    path: Assets/Scenes/Finals/DecisionsText/NotThatBadDecision.unity
+    guid: 0d784a1a7820934428e032a2addbbedd
+  - enabled: 1
+    path: Assets/Scenes/Finals/BadFinal.unity
+    guid: ed9845045c3e96c4296ecffbfeaaecbc
+  - enabled: 1
+    path: Assets/Scenes/Finals/BestFinal.unity
+    guid: 8947e8861709fcd4295d5314dc73fa31
+  - enabled: 1
+    path: Assets/Scenes/Finals/GoodFinal.unity
+    guid: f3e97db5e278126479c76b0e7135f65c
+  - enabled: 1
+    path: Assets/Scenes/Finals/NeutralFinal.unity
+    guid: 96fb1e82c3e87a44b8c3360f3d4f35e6
   m_configObjects: {}

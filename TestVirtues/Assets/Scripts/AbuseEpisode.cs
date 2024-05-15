@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class AbuseEpisode : MonoBehaviour
@@ -41,6 +42,26 @@ public class AbuseEpisode : MonoBehaviour
     public void AgreeButton()
     {
         CreditKarma(options[newDialogueIndex].Karma);
+        if (PlayerPrefs.GetInt("Karma") == 0)
+        {
+            SceneManager.LoadScene("NeutralDecisions");
+        }
+        else if (PlayerPrefs.GetInt("Karma") > 0 && PlayerPrefs.GetInt("Karma") <= 2)
+        {
+            SceneManager.LoadScene("GoodDecisions");
+        }
+        else if (PlayerPrefs.GetInt("Karma") > 2)
+        {
+            SceneManager.LoadScene("BestDecisions");
+        }
+        else if (PlayerPrefs.GetInt("Karma") >= -2 && PlayerPrefs.GetInt("Karma") < 0)
+        {
+            SceneManager.LoadScene("NotThatBadDecision");
+        }
+        else if (PlayerPrefs.GetInt("Karma") < -2)
+        {
+            SceneManager.LoadScene("BadDecision1");
+        }
     }
 
     int newDialogueIndex = 0;

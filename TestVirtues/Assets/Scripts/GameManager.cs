@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -24,8 +25,13 @@ public class GameManager : MonoBehaviour
     #endregion
 
 
-    int karmaScore = 0;
+
+    public TextMeshProUGUI karmaText;
+
+    public int karmaScore = 0;
     
+    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,14 +41,20 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        karmaScore = PlayerPrefs.GetInt("Karma");
+
+        if(Input.GetKeyDown(KeyCode.F4))
+        {
+            PlayerPrefs.SetInt("Karma", 0);
+        }
     }
 
     
     public void AddKarma(int karma)
     {
-        karmaScore += karma;
-        Debug.Log("Karma: " + karmaScore);
+       
+        Debug.Log("Karma + : " + karma);
+        PlayerPrefs.SetInt("Karma", PlayerPrefs.GetInt("Karma") + karma);
     }
 
     public void NextLevel()

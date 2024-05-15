@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class AfterEpisode : MonoBehaviour
 {
@@ -40,6 +41,7 @@ public class AfterEpisode : MonoBehaviour
     public void AgreeButton()
     {
         CreditKarma(options[newDialogueIndex].Karma);
+        SceneManager.LoadScene("Menu 2");
     }
 
     int newDialogueIndex = 0;

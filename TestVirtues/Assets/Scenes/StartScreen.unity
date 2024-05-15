@@ -252,6 +252,7 @@ GameObject:
   - component: {fileID: 581801485}
   - component: {fileID: 581801486}
   - component: {fileID: 581801483}
+  - component: {fileID: 581801487}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -417,6 +418,18 @@ MonoBehaviour:
   b1: {fileID: 1891364192}
   b2: {fileID: 2101366990}
   showCursor: 1
+--- !u!114 &581801487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 581801482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23d247176ac1ecd4a9d5f255310026da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &920944481
 GameObject:
   m_ObjectHideFlags: 0
@@ -618,6 +631,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1504904322}
   - component: {fileID: 1504904323}
+  - component: {fileID: 1504904324}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -650,6 +664,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 33996be31a4bd6b45bd6186918037915, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  karmaText: {fileID: 0}
+  karmaScore: 0
+--- !u!114 &1504904324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1504904321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ea9249674b696c4790a0c4cc406a905, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &1616930160 stripped
