@@ -4,11 +4,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class ParkEpisode : MonoBehaviour
 {
     SceneManagerr sceneManager;
-    private SelectableOption[] options;
+    private List<SelectableOption> options;
     [SerializeField]
     private GameObject disagreeButton;
     [SerializeField]
@@ -16,22 +17,29 @@ public class ParkEpisode : MonoBehaviour
     [SerializeField]
     private GameObject agreeButton;
 
-
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F6))
+        {
+           SceneManager.LoadScene("BestDecisions");
+        }
+    }
     void Start()
     {
         disagreeButton.SetActive(false);
         agreeButton.SetActive(false);
         sceneManager = GameObject.Find("SceneManager").GetComponent<SceneManagerr   >();
-        options = new SelectableOption[5];
-        options[0] = new SelectableOption(new string[] { "you decided to hide and walk continue ", " ", "towards your home and ignore it" }, -2);
-        options[1] = new SelectableOption(new string[] { "you decide to call his girlfriend and", " ", "tell her what is happening" }, -1);
-        options[2] = new SelectableOption(new string[] { "you decided continue walking despite of", " ", "that your friend saw you" }, 0);
-        options[3] = new SelectableOption(new string[] { "you decided to talk to your friend and", " ", "suggest to stop doing it" }, +1);
-        options[4] = new SelectableOption(new string[] { "you confront your friend and make him", " ", "to take sense of his actions" }, +2);
+        options = new List<SelectableOption>
+        {
+        new SelectableOption(new string[] { "you decided to hide and walk continue ", " ", "towards your home and ignore it" }, -2),
+        new SelectableOption(new string[] { "you decide to call his girlfriend and", " ", "tell her what is happening" }, -1),
+        new SelectableOption(new string[] { "you decided continue walking despite of", " ", "that your friend saw you" }, 0),
+        new SelectableOption(new string[] { "you decided to talk to your friend and", " ", "suggest to stop doing it" }, +1),
+        new SelectableOption(new string[] { "you confront your friend and make him", " ", "to take sense of his actions" }, +2)
+        };
 
 
-
-        SceneManagerr sceneManagerComponent2 = this.gameObject.AddComponent<SceneManagerr>();
+    SceneManagerr sceneManagerComponent2 = this.gameObject.AddComponent<SceneManagerr>();
         sceneManagerComponent2.Data = new string[] { "suddlenly you saw you friend cheating his", " ", "girlfriend with another unknown girl", " ", "then seems that both of them", " ", "starts walking towards you", " " };
         sceneManagerComponent2.letter = sceneManager.letter;
         sceneManagerComponent2.cursor = sceneManager.cursor;
@@ -89,7 +97,7 @@ public class ParkEpisode : MonoBehaviour
 
     public void CleanOption()
     {
-        if (options.Length > 0)
+        if (options.Count > 0)
         {
             var testComponent = gameObject.GetComponents<SceneManagerr>();
             var getLastComponent = testComponent[testComponent.Length - 1];
@@ -108,7 +116,7 @@ public class ParkEpisode : MonoBehaviour
     IEnumerator GiveOption()
     {
         //(25);
-        yield return new WaitForSeconds(20f);
+        yield return new WaitForSeconds(25f);
         CreateDialogOption();
         yield return new WaitForSeconds(6f);
         agreeButton.SetActive(true);
@@ -133,18 +141,10 @@ public class ParkEpisode : MonoBehaviour
 
     public int SelectRandomOption()
     {
-        if (options.Length > 0)
+        if (options.Count > 0)
         {
-            int randomIndex = Random.Range(0, options.Length);
+            int randomIndex = Random.Range(0, options.Count);
             auxKarma = options[randomIndex].Karma;
-
-            if (options.Length <= 0)
-            {
-                // disagreeButton.SetActive(false);
-                disagreeButton.GetComponent<Button>().interactable = false;
-                disagreeButton.GetComponent<Image>().enabled = false;
-                text.text = "NO MORE OPTIONS!";
-            }
             return randomIndex;
         }
         else
@@ -156,11 +156,12 @@ public class ParkEpisode : MonoBehaviour
 
     private void RemoveOption(int index)
     {
-        List<SelectableOption> tempList = new List<SelectableOption>(options);
-        tempList.RemoveAt(index);
-        options = tempList.ToArray();
-        var cursor = GameObject.Find("Cursor");
-        Destroy(cursor);
+        if (index >= 0 && index < options.Count())
+        {
+            options.RemoveAt(index);
+            var cursor = GameObject.Find("Cursor");
+            Destroy(cursor);
+        }
     }
 
 

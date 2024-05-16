@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class AbuseEpisode : MonoBehaviour
 {
     SceneManagerr sceneManager;
-    private SelectableOption[] options;
+    private List<SelectableOption> options;
     [SerializeField]
     private GameObject disagreeButton;
     [SerializeField]
@@ -17,13 +19,14 @@ public class AbuseEpisode : MonoBehaviour
     void Start()
     {
         sceneManager = GameObject.Find("SceneManager").GetComponent<SceneManagerr>();
-        options = new SelectableOption[5];
-        options[0] = new SelectableOption(new string[] { "you decided to walk away and continue", " ", "towards your home to be safe" }, -2);
-        options[1] = new SelectableOption(new string[] { "you decide to take you phone and start", " ", "recording what is happening here" }, -1);
-        options[2] = new SelectableOption(new string[] { "you decided to look somebody near you", " ", "to ask for help and go back" }, 0);
-        options[3] = new SelectableOption(new string[] { "you decided to run towards this situation", " ", "and try to stop the abuser" }, +1);
-        options[4] = new SelectableOption(new string[] { "you shout that you are calling the police", " ", "and approached carefully to the scene" }, +2);
-
+        options = new List<SelectableOption>
+        {
+        new SelectableOption(new string[] { "you decided to walk away and continue", " ", "towards your home to be safe" }, -2),
+        new SelectableOption(new string[] { "you decide to take you phone and start", " ", "recording what is happening here" }, -1),
+        new SelectableOption(new string[] { "you decided to look somebody near you", " ", "to ask for help and go back" }, 0),
+        new SelectableOption(new string[] { "you decided to run towards this situation", " ", "and try to stop the abuser" }, +1),
+        new SelectableOption(new string[] { "you shout that you are calling the police", " ", "and approached carefully to the scene" }, +2)
+        };
 
 
         SceneManagerr sceneManagerComponent2 = this.gameObject.AddComponent<SceneManagerr>();
@@ -83,7 +86,7 @@ public class AbuseEpisode : MonoBehaviour
 
     public void CleanOption()
     {
-        if (options.Length > 0)
+        if (options.Count > 0)
         {
             var testComponent = gameObject.GetComponents<SceneManagerr>();
             var getLastComponent = testComponent[testComponent.Length - 1];
@@ -124,18 +127,10 @@ public class AbuseEpisode : MonoBehaviour
 
     public int SelectRandomOption()
     {
-        if (options.Length > 0)
+        if (options.Count > 0)
         {
-            int randomIndex = Random.Range(0, options.Length);
+            int randomIndex = Random.Range(0, options.Count);
             auxKarma = options[randomIndex].Karma;
-
-            if (options.Length <= 0)
-            {
-                // disagreeButton.SetActive(false);
-                disagreeButton.GetComponent<Button>().interactable = false;
-                disagreeButton.GetComponent<Image>().enabled = false;
-                text.text = "NO MORE OPTIONS!";
-            }
             return randomIndex;
         }
         else
@@ -147,11 +142,12 @@ public class AbuseEpisode : MonoBehaviour
 
     private void RemoveOption(int index)
     {
-        List<SelectableOption> tempList = new List<SelectableOption>(options);
-        tempList.RemoveAt(index);
-        options = tempList.ToArray();
-        var cursor = GameObject.Find("Cursor");
-        Destroy(cursor);
+        if (index >= 0 && index < options.Count())
+        {
+            options.RemoveAt(index);
+            var cursor = GameObject.Find("Cursor");
+            Destroy(cursor);
+        }
     }
 
 

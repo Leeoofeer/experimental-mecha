@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,7 +9,7 @@ using UnityEngine.UI;
 public class WalkingEpisode : MonoBehaviour
 {
     SceneManagerr sceneManager;
-    private SelectableOption[] options;
+    private List<SelectableOption> options;
     [SerializeField]
     private GameObject disagreeButton;
     [SerializeField]
@@ -17,13 +18,14 @@ public class WalkingEpisode : MonoBehaviour
     void Start()
     {
         sceneManager = GameObject.Find("SceneManager").GetComponent<SceneManagerr>();
-        options = new SelectableOption[5];        
-        options[0] = new SelectableOption((new string[] { "you decided to grab the money that was in", " ", "and discard the purse on a near trash bin" }), -2);
-        options[1] = new SelectableOption(new string[] { "you decided to grab the money that was in", " ", "and left the purse where it was" }, -1);
-        options[2] = new SelectableOption(new string[] {  "you decided to not grab the money that was", " ", "in and left the purse where it was" }, 0);
-        options[3] = new SelectableOption(new string[] {  "you decided to grab the purse and take it", " ", "to the nearby police station" }, +1);
-        options[4] = new SelectableOption(new string[] { "you saw a mobile number in it and called", " ", "the owner to return the purse" }, +2);
-
+        options = new List<SelectableOption>
+        {
+        new SelectableOption((new string[] { "you decided to grab the money that was in", " ", "and discard the purse on a near trash bin" }), -2),
+        new SelectableOption(new string[] { "you decided to grab the money that was in", " ", "and left the purse where it was" }, -1),
+        new SelectableOption(new string[] {  "you decided to not grab the money that was", " ", "in and left the purse where it was" }, 0),
+        new SelectableOption(new string[] {  "you decided to grab the purse and take it", " ", "to the nearby police station" }, +1),
+        new SelectableOption(new string[] { "you saw a mobile number in it and called", " ", "the owner to return the purse" }, +2)
+        };
 
         SceneManagerr sceneManagerComponent2 = this.gameObject.AddComponent<SceneManagerr   >();
         sceneManagerComponent2.Data = new string[] { "you finish working and decided to walk", " ", "towards your home and after some blocks", " ", "you found a lost purse on the street", " ", "it seems to be nobody on your street", " " };
@@ -63,7 +65,7 @@ public class WalkingEpisode : MonoBehaviour
 
     public void CleanOption()
     {
-        if (options.Length > 0)
+        if (options.Count > 0)
         {
             var testComponent = gameObject.GetComponents<SceneManagerr>();
             var getLastComponent = testComponent[testComponent.Length - 1];
@@ -101,21 +103,13 @@ public class WalkingEpisode : MonoBehaviour
         GameManager.Instance.AddKarma(karma);
     }
      int auxKarma;
-    
+
     public int SelectRandomOption()
     {
-        if (options.Length > 0)
+        if (options.Count > 0)
         {
-            int randomIndex = Random.Range(0, options.Length);
+            int randomIndex = Random.Range(0, options.Count);
             auxKarma = options[randomIndex].Karma;
-            
-            if (options.Length <= 0)
-            {
-               // disagreeButton.SetActive(false);
-               disagreeButton.GetComponent<Button>().interactable = false;
-                disagreeButton.GetComponent<Image>().enabled = false;
-                text.text = "NO MORE OPTIONS!";
-            }
             return randomIndex;
         }
         else
@@ -127,11 +121,12 @@ public class WalkingEpisode : MonoBehaviour
 
     private void RemoveOption(int index)
     {
-        List<SelectableOption> tempList = new List<SelectableOption>(options);
-        tempList.RemoveAt(index);
-        options = tempList.ToArray();
-        var cursor = GameObject.Find("Cursor");
-        Destroy(cursor);
+        if (index >= 0 && index < options.Count())
+        {
+            options.RemoveAt(index);
+            var cursor = GameObject.Find("Cursor");
+            Destroy(cursor);
+        }
     }
 
 
