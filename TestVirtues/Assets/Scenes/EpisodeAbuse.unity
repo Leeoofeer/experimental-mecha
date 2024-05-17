@@ -384,7 +384,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   disagreeButton: {fileID: 551071145661193508}
+  agreeButton: {fileID: 1198686843}
   text: {fileID: 551071145661193507}
+  newDialogueIndex: 0
 --- !u!114 &581801487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -429,6 +431,8 @@ MonoBehaviour:
   - {fileID: -1948508451, guid: b81a5754c56f8a74980162a9604d9d75, type: 3}
   - {fileID: 1583183054, guid: b81a5754c56f8a74980162a9604d9d75, type: 3}
   startPos: {x: 0, y: 3.6}
+  b1: {fileID: 0}
+  b2: {fileID: 0}
   showCursor: 1
 --- !u!1 &920944481
 GameObject:
@@ -514,6 +518,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1198686843 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3959621937409138858, guid: d677cf0b2ccd89e4080848b418799df9, type: 3}
+  m_PrefabInstance: {fileID: 3959621936878568901}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1233691432 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 551071146591845898, guid: 656782134db6e4e45abde83e764f3e2f, type: 3}
@@ -665,6 +674,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33996be31a4bd6b45bd6186918037915, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  karmaText: {fileID: 0}
+  karmaScore: 0
 --- !u!224 &1616930160 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3959621937409138869, guid: d677cf0b2ccd89e4080848b418799df9, type: 3}

@@ -13,9 +13,9 @@ public class ParkEpisode : MonoBehaviour
     [SerializeField]
     private GameObject disagreeButton;
     [SerializeField]
-    private TextMeshProUGUI text;
-    [SerializeField]
     private GameObject agreeButton;
+    [SerializeField]
+    private TextMeshProUGUI text;  
 
     private void Update()
     {
@@ -52,75 +52,113 @@ public class ParkEpisode : MonoBehaviour
 
     }
 
+   
     public void AgreeButton()
     {
-        CreditKarma(options[newDialogueIndex].Karma);
-        if (PlayerPrefs.GetInt("Karma") == 0)
+        if (newDialogueIndex >= 0 && newDialogueIndex < options.Count)
         {
-            SceneManager.LoadScene("NeutralDecisions");
+            int karma = options[newDialogueIndex].Karma;
+            CreditKarma(karma);
+            RemoveOption(newDialogueIndex);
+            LoadSceneBasedOnKarma(karma);
         }
-        else if (PlayerPrefs.GetInt("Karma") > 0 && PlayerPrefs.GetInt("Karma") <= 2)
+        else
         {
-            SceneManager.LoadScene("GoodDecisions");
+            if (newDialogueIndex <= 0)
+            {
+                int karma = auxOptions.Karma;
+                CreditKarma(karma);
+                LoadSceneBasedOnKarma(karma);
+            }
+            Debug.LogWarning("newDialogueIndex is out of range.");
         }
-        else if (PlayerPrefs.GetInt("Karma") > 2)
-        {
-            SceneManager.LoadScene("BestDecisions");
-        }
-        else if (PlayerPrefs.GetInt("Karma") >= -2 && PlayerPrefs.GetInt("Karma") < 0)
-        {
-            SceneManager.LoadScene("NotThatBadDecision");
-        }
-        else if (PlayerPrefs.GetInt("Karma") < -2)
-        {
-            SceneManager.LoadScene("BadDecision1");
-        }
-
     }
 
-    int newDialogueIndex = 0;
+    private void LoadSceneBasedOnKarma(int karma)
+    {
+        string sceneName = "";
+
+        switch (karma)
+        {
+            case -2:
+                sceneName = "ParkVeryBadOpt";
+                break;
+            case -1:
+                sceneName = "ParkBadOpt";
+                break;
+            case 0:
+                sceneName = "ParkNeutralOpt";
+                break;
+            case 1:
+                sceneName = "ParkGoodOpt";
+                break;
+            case 2:
+                sceneName = "ParkVeryGoodOpt";
+                break;
+            default:
+                Debug.LogError("Karma value out of expected range.");
+                return;
+        }
+
+        SceneManager.LoadScene(sceneName);
+    }
+
+    public int newDialogueIndex = 0;
     private void CreateDialogOption()
     {
         SceneManagerr sceneManagerComponent = gameObject.AddComponent<SceneManagerr>();
         newDialogueIndex = SelectRandomOption();
-        sceneManagerComponent.Data = options[newDialogueIndex].Data;
-        sceneManagerComponent.letter = sceneManager.letter;
-        sceneManagerComponent.cursor = sceneManager.cursor;
-        sceneManagerComponent.typeSound = sceneManager.typeSound;
-        sceneManagerComponent.endOfLineSound = sceneManager.endOfLineSound;
-        sceneManagerComponent.characters = sceneManager.characters;
-        sceneManagerComponent.startPos = new Vector2(0f, -0.15f);
-        sceneManagerComponent.showCursor = false;
-        RemoveOption(newDialogueIndex);
-
+        if (newDialogueIndex >= 0 && newDialogueIndex < options.Count)
+        {
+            sceneManagerComponent.Data = options[newDialogueIndex].Data;
+            sceneManagerComponent.letter = sceneManager.letter;
+            sceneManagerComponent.cursor = sceneManager.cursor;
+            sceneManagerComponent.typeSound = sceneManager.typeSound;
+            sceneManagerComponent.endOfLineSound = sceneManager.endOfLineSound;
+            sceneManagerComponent.characters = sceneManager.characters;
+            sceneManagerComponent.startPos = new Vector2(0f, -0.15f);
+            sceneManagerComponent.showCursor = false;
+        }
+        else
+        {
+            Debug.LogError("Failed to create dialogue option: newDialogueIndex is out of range.");
+        }
     }
 
     public void CleanOption()
     {
+        RemoveOption(newDialogueIndex);
         if (options.Count > 0)
         {
             var testComponent = gameObject.GetComponents<SceneManagerr>();
             var getLastComponent = testComponent[testComponent.Length - 1];
             StartCoroutine(CleanText(getLastComponent));
+            agreeButton.SetActive(false);
+            disagreeButton.SetActive(false);
+            StartCoroutine(ReactivateButtons());
         }
         else
         {
-            // disagreeButton.SetActive(false);
             disagreeButton.GetComponent<Button>().interactable = false;
             disagreeButton.GetComponent<Image>().enabled = false;
             text.text = "NO MORE OPTIONS!";
         }
 
     }
-
+    IEnumerator ReactivateButtons()
+    {
+        yield return new WaitForSeconds(9f);
+        disagreeButton.SetActive(true);
+        agreeButton.SetActive(true);
+    }
     IEnumerator GiveOption()
     {
         //(25);
-        yield return new WaitForSeconds(25f);
+        yield return new WaitForSeconds(20f);
         CreateDialogOption();
-        yield return new WaitForSeconds(6f);
-        agreeButton.SetActive(true);
+        yield return new WaitForSeconds(9f);
         disagreeButton.SetActive(true);
+        agreeButton.SetActive(true);
     }
 
     private IEnumerator CleanText(SceneManagerr sMc)
@@ -154,14 +192,21 @@ public class ParkEpisode : MonoBehaviour
         }
     }
 
+    SelectableOption auxOptions;
+
     private void RemoveOption(int index)
     {
         if (index >= 0 && index < options.Count())
         {
+            if (options.Count <= 1)
+            {
+                auxOptions = options[index];
+            }
             options.RemoveAt(index);
             var cursor = GameObject.Find("Cursor");
             Destroy(cursor);
         }
+
     }
 
 

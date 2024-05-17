@@ -5,19 +5,23 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class AbuseEpisode : MonoBehaviour
 {
     SceneManagerr sceneManager;
     private List<SelectableOption> options;
+
     [SerializeField]
     private GameObject disagreeButton;
+    [SerializeField]
+    private GameObject agreeButton;
     [SerializeField]
     private TextMeshProUGUI text;
 
     void Start()
     {
+        disagreeButton.SetActive(false);
+        agreeButton.SetActive(false);
         sceneManager = GameObject.Find("SceneManager").GetComponent<SceneManagerr>();
         options = new List<SelectableOption>
         {
@@ -27,7 +31,7 @@ public class AbuseEpisode : MonoBehaviour
         new SelectableOption(new string[] { "you decided to run towards this situation", " ", "and try to stop the abuser" }, +1),
         new SelectableOption(new string[] { "you shout that you are calling the police", " ", "and approached carefully to the scene" }, +2)
         };
-
+        
 
         SceneManagerr sceneManagerComponent2 = this.gameObject.AddComponent<SceneManagerr>();
         sceneManagerComponent2.Data = new string[] { "you continued walking towards your home", " ", "but you found on an alley a", " ", "person being abused in the dark", " ", "and nobody is near", " " };
@@ -42,59 +46,94 @@ public class AbuseEpisode : MonoBehaviour
 
     }
 
+    
+
     public void AgreeButton()
     {
-        CreditKarma(options[newDialogueIndex].Karma);
-        if (PlayerPrefs.GetInt("Karma") == 0)
+        if (newDialogueIndex >= 0 && newDialogueIndex < options.Count)
         {
-            SceneManager.LoadScene("NeutralDecisions");
+            int karma = options[newDialogueIndex].Karma;
+            CreditKarma(karma);
+            RemoveOption(newDialogueIndex);
+            LoadSceneBasedOnKarma(karma);
         }
-        else if (PlayerPrefs.GetInt("Karma") > 0 && PlayerPrefs.GetInt("Karma") <= 2)
+        else
         {
-            SceneManager.LoadScene("GoodDecisions");
-        }
-        else if (PlayerPrefs.GetInt("Karma") > 2)
-        {
-            SceneManager.LoadScene("BestDecisions");
-        }
-        else if (PlayerPrefs.GetInt("Karma") >= -2 && PlayerPrefs.GetInt("Karma") < 0)
-        {
-            SceneManager.LoadScene("NotThatBadDecision");
-        }
-        else if (PlayerPrefs.GetInt("Karma") < -2)
-        {
-            SceneManager.LoadScene("BadDecision1");
+            if (newDialogueIndex <= 0)
+            {
+                int karma = auxOptions.Karma;
+                CreditKarma(karma);
+                LoadSceneBasedOnKarma(karma);
+            }
+            Debug.LogWarning("newDialogueIndex is out of range.");
         }
     }
 
-    int newDialogueIndex = 0;
+    private void LoadSceneBasedOnKarma(int karma)
+    {
+        string sceneName = "";
+
+        switch (karma)
+        {
+            case -2:
+                sceneName = "AbuseVeryBadOpt";
+                break;
+            case -1:
+                sceneName = "AbuseBadOpt";
+                break;
+            case 0:
+                sceneName = "AbuseNeutralOpt";
+                break;
+            case 1:
+                sceneName = "AbuseGoodOpt";
+                break;
+            case 2:
+                sceneName = "AbuseVeryGoodOpt";
+                break;
+            default:
+                Debug.LogError("Karma value out of expected range.");
+                return;
+        }
+
+        SceneManager.LoadScene(sceneName);
+    }
+
+    public int newDialogueIndex = 0;
     private void CreateDialogOption()
     {
         SceneManagerr sceneManagerComponent = gameObject.AddComponent<SceneManagerr>();
         newDialogueIndex = SelectRandomOption();
-        sceneManagerComponent.Data = options[newDialogueIndex].Data;
-        sceneManagerComponent.letter = sceneManager.letter;
-        sceneManagerComponent.cursor = sceneManager.cursor;
-        sceneManagerComponent.typeSound = sceneManager.typeSound;
-        sceneManagerComponent.endOfLineSound = sceneManager.endOfLineSound;
-        sceneManagerComponent.characters = sceneManager.characters;
-        sceneManagerComponent.startPos = new Vector2(0f, -0.15f);
-        sceneManagerComponent.showCursor = false;
-        RemoveOption(newDialogueIndex);
-
+        if (newDialogueIndex >= 0 && newDialogueIndex < options.Count)
+        {
+            sceneManagerComponent.Data = options[newDialogueIndex].Data;
+            sceneManagerComponent.letter = sceneManager.letter;
+            sceneManagerComponent.cursor = sceneManager.cursor;
+            sceneManagerComponent.typeSound = sceneManager.typeSound;
+            sceneManagerComponent.endOfLineSound = sceneManager.endOfLineSound;
+            sceneManagerComponent.characters = sceneManager.characters;
+            sceneManagerComponent.startPos = new Vector2(0f, -0.15f);
+            sceneManagerComponent.showCursor = false;
+        }
+        else
+        {
+            Debug.LogError("Failed to create dialogue option: newDialogueIndex is out of range.");
+        }
     }
 
     public void CleanOption()
     {
+        RemoveOption(newDialogueIndex);
         if (options.Count > 0)
         {
             var testComponent = gameObject.GetComponents<SceneManagerr>();
             var getLastComponent = testComponent[testComponent.Length - 1];
             StartCoroutine(CleanText(getLastComponent));
+            agreeButton.SetActive(false);
+            disagreeButton.SetActive(false);
+            StartCoroutine(ReactivateButtons());
         }
         else
         {
-            // disagreeButton.SetActive(false);
             disagreeButton.GetComponent<Button>().interactable = false;
             disagreeButton.GetComponent<Image>().enabled = false;
             text.text = "NO MORE OPTIONS!";
@@ -107,6 +146,15 @@ public class AbuseEpisode : MonoBehaviour
         //(25);
         yield return new WaitForSeconds(20f);
         CreateDialogOption();
+        yield return new WaitForSeconds(9f);
+        disagreeButton.SetActive(true);
+        agreeButton.SetActive(true);
+    }
+    IEnumerator ReactivateButtons()
+    {
+        yield return new WaitForSeconds(9f);
+        disagreeButton.SetActive(true);
+        agreeButton.SetActive(true);
     }
 
     private IEnumerator CleanText(SceneManagerr sMc)
@@ -140,14 +188,21 @@ public class AbuseEpisode : MonoBehaviour
         }
     }
 
+    SelectableOption auxOptions;
+
     private void RemoveOption(int index)
     {
         if (index >= 0 && index < options.Count())
         {
+            if (options.Count <= 1)
+            {
+                auxOptions = options[index];
+            }
             options.RemoveAt(index);
             var cursor = GameObject.Find("Cursor");
             Destroy(cursor);
         }
+        
     }
 
 
