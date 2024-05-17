@@ -53,4 +53,49 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Finals/NeutralFinal.unity
     guid: 96fb1e82c3e87a44b8c3360f3d4f35e6
+  - enabled: 1
+    path: Assets/Scenes/Finals/ParkOpt/Abuse/AbuseBadOpt.unity
+    guid: c72b7f402c6975d458b9cdc798dc79df
+  - enabled: 1
+    path: Assets/Scenes/Finals/ParkOpt/Abuse/AbuseGoodOpt.unity
+    guid: 8f4685e0347797f4fa3553919d94d0c0
+  - enabled: 1
+    path: Assets/Scenes/Finals/ParkOpt/Abuse/AbuseNeutralOpt.unity
+    guid: 43a15d63f7222e648ae86af6f2d7a07b
+  - enabled: 1
+    path: Assets/Scenes/Finals/ParkOpt/Abuse/AbuseVeryBadOpt.unity
+    guid: d3940b8c39889814387eefc0ad0a32f4
+  - enabled: 1
+    path: Assets/Scenes/Finals/ParkOpt/Abuse/AbuseVeryGoodOpt.unity
+    guid: dfaa02c7f4ac15b4d88b12ec9f0164e0
+  - enabled: 1
+    path: Assets/Scenes/Finals/ParkOpt/After/AfterBadOpt.unity
+    guid: 89a00bce9627fbb44a59661432baf4af
+  - enabled: 1
+    path: Assets/Scenes/Finals/ParkOpt/After/AfterGoodOpt.unity
+    guid: c0924f44c33c92143b55dad4b1a3de93
+  - enabled: 1
+    path: Assets/Scenes/Finals/ParkOpt/After/AfterNeutralOpt.unity
+    guid: 57d1bfbf23191f9408fff74b54a7917f
+  - enabled: 1
+    path: Assets/Scenes/Finals/ParkOpt/After/AfterVeryBadOpt.unity
+    guid: d9e9569f89d21694a86c513ad1ecce60
+  - enabled: 1
+    path: Assets/Scenes/Finals/ParkOpt/After/AfterVeryGoodOpt.unity
+    guid: 6c85fddb23eefbe42ba78ed5192f7fb2
+  - enabled: 1
+    path: Assets/Scenes/Finals/ParkOpt/Park/ParkBadOpt.unity
+    guid: d747fa0e83d01024d8956b08be03b34d
+  - enabled: 1
+    path: Assets/Scenes/Finals/ParkOpt/Park/ParkGoodOpt.unity
+    guid: 1c8959011a9a7984984ff3d34b3534b6
+  - enabled: 1
+    path: Assets/Scenes/Finals/ParkOpt/Park/ParkNeutralOpt.unity
+    guid: ede96f91c566bcb4c9a8611a4e240d29
+  - enabled: 1
+    path: Assets/Scenes/Finals/ParkOpt/Park/ParkVeryBadOpt.unity
+    guid: e9523cb9a113d0c4aba03ce885863cf1
+  - enabled: 1
+    path: Assets/Scenes/Finals/ParkOpt/Park/ParkVeryGoodOpt.unity
+    guid: 91b7300a15f3c6d4d90a72a6cc2df000
   m_configObjects: {}
