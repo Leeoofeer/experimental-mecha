@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class fishingBarScript : MonoBehaviour
+public class FishingBarScript : MonoBehaviour
 {
     // Start is called before the first frame update
     public Rigidbody rb;
