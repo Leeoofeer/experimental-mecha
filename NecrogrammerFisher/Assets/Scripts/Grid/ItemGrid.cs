@@ -166,4 +166,9 @@ public class ItemGrid : MonoBehaviour
     {
         return inventoryItemSlot[x, y];
     }
+
+    internal Vector2Int FindSpaceForObject(InventoryItem itemToInsert)
+    {
+        throw new NotImplementedException();
+    }
 }
