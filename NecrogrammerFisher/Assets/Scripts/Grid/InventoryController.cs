@@ -37,10 +37,17 @@ public class InventoryController : MonoBehaviour
     {
         ItemIconDrag();
 
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            
+            RotateItem();
+        }
+        
 
         if(Input.GetKeyDown(KeyCode.Q))
         {
-            CreateRandomItem();
+            if (selectedItem == null)
+                CreateRandomItem();
         }
 
         if (Input.GetKeyDown(KeyCode.W))
@@ -62,8 +69,16 @@ public class InventoryController : MonoBehaviour
         }
     }
 
+    private void RotateItem()
+    {
+        if(selectedItem == null) { return; }
+        selectedItem.Rotate();
+    }
+
     private void InsertRandomItem()
     {
+        if (selectedItemGrid == null) return;
+
         CreateRandomItem();
         InventoryItem itemToInsert = selectedItem;
         selectedItem = null;
@@ -72,7 +87,13 @@ public class InventoryController : MonoBehaviour
 
     private void InsertItem(InventoryItem itemToInsert)
     {
-        Vector2Int posOnGrid = selectedItemGrid.FindSpaceForObject(itemToInsert);
+          
+        
+        Vector2Int? posOnGrid = selectedItemGrid.FindSpaceForObject(itemToInsert);
+        if(posOnGrid == null) { return; }
+
+        selectedItemGrid.PlaceItem(itemToInsert, posOnGrid.Value.x, posOnGrid.Value.y);
+
     }
 
     Vector2Int oldPosition;
@@ -101,7 +122,7 @@ public class InventoryController : MonoBehaviour
         }
         else 
         {
-            inventoryHighLight.Show(selectedItemGrid.BoundryCheck(positionOnGrid.x,positionOnGrid.y, selectedItem.itemData.width, selectedItem.itemData.height));
+            inventoryHighLight.Show(selectedItemGrid.BoundryCheck(positionOnGrid.x,positionOnGrid.y, selectedItem.WIDTH, selectedItem.HEIGHT));
             
             inventoryHighLight.SetSize(selectedItem);
             inventoryHighLight.SetPosition(selectedItemGrid, selectedItem, positionOnGrid.x, positionOnGrid.y);
@@ -115,6 +136,8 @@ public class InventoryController : MonoBehaviour
 
         rectTransform = inventoryItem.GetComponent<RectTransform>();
         rectTransform.SetParent(canvasTransform);
+        rectTransform.SetAsLastSibling();
+
 
         int selectedItemID = Random.Range(0, items.Count);
         inventoryItem.Set(items[selectedItemID]);
@@ -140,8 +163,8 @@ public class InventoryController : MonoBehaviour
 
         if (selectedItem != null)
         {
-            position.x -= (selectedItem.itemData.width - 1) * ItemGrid.tileSizeWidth / 2;
-            position.y += (selectedItem.itemData.height - 1) * ItemGrid.tileSizeHeight / 2;
+            position.x -= (selectedItem.WIDTH - 1) * ItemGrid.tileSizeWidth / 2;
+            position.y += (selectedItem.HEIGHT - 1) * ItemGrid.tileSizeHeight / 2;
         }
 
         return selectedItemGrid.GetTileGridPosition(position);
@@ -158,6 +181,7 @@ public class InventoryController : MonoBehaviour
                 selectedItem = overlapItem;
                 overlapItem = null;
                 rectTransform = selectedItem.GetComponent<RectTransform>();
+                rectTransform.SetAsLastSibling();
             }
         }
     }
