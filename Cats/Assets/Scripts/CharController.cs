@@ -12,7 +12,7 @@ public class CharController : MonoBehaviour
     public float MoveOnX = 0.9f;
     public float MoveOnZ = 0.7f;
     public Animator CharAnim;
-
+    public bool isHuman = true;
     AnimState _animState;
 
     float _moveX;
@@ -22,85 +22,171 @@ public class CharController : MonoBehaviour
     {
         bool isIdle = true;
 
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (isHuman)
         {
-            isIdle = false;
-            _animState = AnimState.WALK;
-            if (this.transform.position.z < GameController.Instance.MaxUp)
-                _moveZ = MoveOnZ;
-            else
-                _moveZ = 0;
-        }
-        else if (Input.GetKey(KeyCode.DownArrow))
-        {
-            isIdle = false;
-            _animState = AnimState.WALK;
-            if (this.transform.position.z > GameController.Instance.MaxDown)
-                _moveZ = -MoveOnZ;
-            else
-                _moveZ = 0;
-        }
-        else
-        {
-            _moveZ = 0f;
-        }
-
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            isIdle = false;
-            _animState = AnimState.WALK;
-            FlipRight(CharAnim.transform);
-
-            if (this.transform.position.x < GameController.Instance.MaxRight)
+            if (Input.GetKey(KeyCode.UpArrow))
             {
-                _moveX = MoveOnX;
+                isIdle = false;
+                _animState = AnimState.WALK;
+                if (this.transform.position.z < GameController.Instance.MaxUp)
+                    _moveZ = MoveOnZ;
+                else
+                    _moveZ = 0;
+            }
+            else if (Input.GetKey(KeyCode.DownArrow))
+            {
+                isIdle = false;
+                _animState = AnimState.WALK;
+                if (this.transform.position.z > GameController.Instance.MaxDown)
+                    _moveZ = -MoveOnZ;
+                else
+                    _moveZ = 0;
             }
             else
             {
-                if (GameController.Instance.Cats == 5)
+                _moveZ = 0f;
+            }
+
+            if (Input.GetKey(KeyCode.RightArrow))
+            {
+                isIdle = false;
+                _animState = AnimState.WALK;
+                FlipRight(CharAnim.transform);
+
+                if (this.transform.position.x < GameController.Instance.MaxRight)
                 {
-                    GameEvents.ExitArea();
+                    _moveX = MoveOnX;
                 }
                 else
                 {
-                    _moveX = 0;
+                    if (GameController.Instance.Cats == 5)
+                    {
+                        GameEvents.ExitArea();
+                    }
+                    else
+                    {
+                        _moveX = 0;
+                    }
                 }
             }
-        }
-        else if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            isIdle = false;
-            _animState = AnimState.WALK;
-            FlipLeft(CharAnim.transform);
+            else if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                isIdle = false;
+                _animState = AnimState.WALK;
+                FlipLeft(CharAnim.transform);
 
-            if (this.transform.position.x > GameController.Instance.MaxLeft)
-                _moveX = -MoveOnX;
+                if (this.transform.position.x > GameController.Instance.MaxLeft)
+                    _moveX = -MoveOnX;
+                else
+                    _moveX = 0;
+            }
             else
-                _moveX = 0;
-        }
-        else 
-        {
-            _moveX = 0f;
-        }
+            {
+                _moveX = 0f;
+            }
 
-        if(isIdle)
-        {
-            _animState = AnimState.IDLE;
-        }
+            if (isIdle)
+            {
+                _animState = AnimState.IDLE;
+            }
 
-        switch (_animState)
-        {
-            case AnimState.IDLE:
-                IdleAnim();
-                break;
-            case AnimState.WALK:
-                WalkAnim();
-                break;
-            default:
-                break;
-        }
+            switch (_animState)
+            {
+                case AnimState.IDLE:
+                    IdleAnim();
+                    break;
+                case AnimState.WALK:
+                    WalkAnim();
+                    break;
+                default:
+                    break;
+            }
 
-        Move(this.transform, new Vector3(_moveX, 0, _moveZ));
+            Move(this.transform, new Vector3(_moveX, 0, _moveZ));
+        }
+        else
+        {
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                isIdle = false;
+                _animState = AnimState.WALK;
+                if (this.transform.position.z < GameController.Instance.MaxUp)
+                    _moveZ = MoveOnZ;
+                else
+                    _moveZ = 0;
+            }
+            else if (Input.GetKey(KeyCode.RightArrow))
+            {
+                isIdle = false;
+                _animState = AnimState.WALK;
+                if (this.transform.position.z > GameController.Instance.MaxDown)
+                    _moveZ = -MoveOnZ;
+                else
+                    _moveZ = 0;
+            }
+            else
+            {
+                _moveZ = 0f;
+            }
+
+            if (Input.GetKey(KeyCode.UpArrow))
+            {
+                isIdle = false;
+                _animState = AnimState.WALK;
+                FlipRight(CharAnim.transform);
+
+                if (this.transform.position.x < GameController.Instance.MaxRight)
+                {
+                    _moveX = MoveOnX;
+                }
+                else
+                {
+                    if (GameController.Instance.Cats == 5)
+                    {
+                        GameEvents.ExitArea();
+                    }
+                    else
+                    {
+                        _moveX = 0;
+                    }
+                }
+            }
+            else if (Input.GetKey(KeyCode.DownArrow))
+            {
+                isIdle = false;
+                _animState = AnimState.WALK;
+                FlipLeft(CharAnim.transform);
+
+                if (this.transform.position.x > GameController.Instance.MaxLeft)
+                    _moveX = -MoveOnX;
+                else
+                    _moveX = 0;
+            }
+            else
+            {
+                _moveX = 0f;
+            }
+
+            if (isIdle)
+            {
+                _animState = AnimState.IDLE;
+            }
+
+            switch (_animState)
+            {
+                case AnimState.IDLE:
+                    IdleAnim();
+                    break;
+                case AnimState.WALK:
+                    WalkAnim();
+                    break;
+                default:
+                    break;
+            }
+
+            Move(this.transform, new Vector3(_moveX, 0, _moveZ));
+        }
+       
 
     }
 
@@ -140,5 +226,15 @@ public class CharController : MonoBehaviour
         t.localScale = new Vector3(-Mathf.Abs(t.localScale.x), t.localScale.y, t.localScale.z);
     }
     #endregion
+
+    public GameObject smellFish;
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Pescaderia"))
+        {
+            smellFish.SetActive(true);
+        }
+    }
 
 }
