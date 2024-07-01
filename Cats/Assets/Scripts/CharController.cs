@@ -13,7 +13,9 @@ public class CharController : MonoBehaviour
     public float MoveOnZ = 0.7f;
     public Animator CharAnim;
     public bool isHuman = true;
+    public FollowPosition cController;
     AnimState _animState;
+    public CatController catController;
 
     float _moveX;
     float _moveZ;
@@ -196,6 +198,8 @@ public class CharController : MonoBehaviour
         return value;
     }
 
+   
+
     #region Animations
     void IdleAnim()
     {
@@ -234,6 +238,12 @@ public class CharController : MonoBehaviour
         if (other.gameObject.CompareTag("Pescaderia"))
         {
             smellFish.SetActive(true);
+        }
+        if (other.gameObject.CompareTag("TransformToCat"))
+        {
+            cController.SetCatMode();
+            catController.enabled = true;
+            this.gameObject.SetActive(false);
         }
     }
 
