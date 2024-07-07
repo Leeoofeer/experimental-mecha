@@ -7,18 +7,33 @@ public enum AnimState
     IDLE,
     WALK
 }
+
 public class CharController : MonoBehaviour
 {
     public float MoveOnX = 0.9f;
     public float MoveOnZ = 0.7f;
+    public float velocity = 1f;
     public Animator CharAnim;
     public bool isHuman = true;
     public FollowPosition cController;
     AnimState _animState;
     public CatController catController;
 
-    float _moveX;
-    float _moveZ;
+    private float _moveX;
+    private float _moveZ;
+    private Rigidbody rb;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+        if (rb == null)
+        {
+            rb = gameObject.AddComponent<Rigidbody>();
+        }
+
+        rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+        rb.useGravity = false;  
+    }
 
     void Update()
     {
@@ -30,7 +45,7 @@ public class CharController : MonoBehaviour
             {
                 isIdle = false;
                 _animState = AnimState.WALK;
-                if (this.transform.position.z < GameController.Instance.MaxUp)
+                if (transform.position.z < GameController.Instance.MaxUp)
                     _moveZ = MoveOnZ;
                 else
                     _moveZ = 0;
@@ -39,7 +54,7 @@ public class CharController : MonoBehaviour
             {
                 isIdle = false;
                 _animState = AnimState.WALK;
-                if (this.transform.position.z > GameController.Instance.MaxDown)
+                if (transform.position.z > GameController.Instance.MaxDown)
                     _moveZ = -MoveOnZ;
                 else
                     _moveZ = 0;
@@ -55,7 +70,7 @@ public class CharController : MonoBehaviour
                 _animState = AnimState.WALK;
                 FlipRight(CharAnim.transform);
 
-                if (this.transform.position.x < GameController.Instance.MaxRight)
+                if (transform.position.x < GameController.Instance.MaxRight)
                 {
                     _moveX = MoveOnX;
                 }
@@ -77,7 +92,7 @@ public class CharController : MonoBehaviour
                 _animState = AnimState.WALK;
                 FlipLeft(CharAnim.transform);
 
-                if (this.transform.position.x > GameController.Instance.MaxLeft)
+                if (transform.position.x > GameController.Instance.MaxLeft)
                     _moveX = -MoveOnX;
                 else
                     _moveX = 0;
@@ -104,7 +119,7 @@ public class CharController : MonoBehaviour
                     break;
             }
 
-            Move(this.transform, new Vector3(_moveX, 0, _moveZ));
+            Move(new Vector3(_moveX, 0, _moveZ));
         }
         else
         {
@@ -112,7 +127,7 @@ public class CharController : MonoBehaviour
             {
                 isIdle = false;
                 _animState = AnimState.WALK;
-                if (this.transform.position.z < GameController.Instance.MaxUp)
+                if (transform.position.z < GameController.Instance.MaxUp)
                     _moveZ = MoveOnZ;
                 else
                     _moveZ = 0;
@@ -121,7 +136,7 @@ public class CharController : MonoBehaviour
             {
                 isIdle = false;
                 _animState = AnimState.WALK;
-                if (this.transform.position.z > GameController.Instance.MaxDown)
+                if (transform.position.z > GameController.Instance.MaxDown)
                     _moveZ = -MoveOnZ;
                 else
                     _moveZ = 0;
@@ -137,7 +152,7 @@ public class CharController : MonoBehaviour
                 _animState = AnimState.WALK;
                 FlipRight(CharAnim.transform);
 
-                if (this.transform.position.x < GameController.Instance.MaxRight)
+                if (transform.position.x < GameController.Instance.MaxRight)
                 {
                     _moveX = MoveOnX;
                 }
@@ -159,7 +174,7 @@ public class CharController : MonoBehaviour
                 _animState = AnimState.WALK;
                 FlipLeft(CharAnim.transform);
 
-                if (this.transform.position.x > GameController.Instance.MaxLeft)
+                if (transform.position.x > GameController.Instance.MaxLeft)
                     _moveX = -MoveOnX;
                 else
                     _moveX = 0;
@@ -186,10 +201,8 @@ public class CharController : MonoBehaviour
                     break;
             }
 
-            Move(this.transform, new Vector3(_moveX, 0, _moveZ));
+            Move(new Vector3(_moveX, 0, _moveZ));
         }
-       
-
     }
 
     float CheckMoveOnZ(float f)
@@ -197,8 +210,6 @@ public class CharController : MonoBehaviour
         float value = 0;
         return value;
     }
-
-   
 
     #region Animations
     void IdleAnim()
@@ -213,9 +224,9 @@ public class CharController : MonoBehaviour
 
     #region Move
 
-    void Move(Transform t, Vector3 dir)
+    void Move(Vector3 dir)
     {
-        t.position += new Vector3(dir.x * Time.deltaTime, 0, dir.z * Time.deltaTime);
+        rb.MovePosition(transform.position + dir * velocity * Time.deltaTime);
     }
 
     #endregion
@@ -246,5 +257,5 @@ public class CharController : MonoBehaviour
             this.gameObject.SetActive(false);
         }
     }
-
 }
+

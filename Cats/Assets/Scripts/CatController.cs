@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class CatController : MonoBehaviour
 {
     public float moveSpeed = 5f;
@@ -8,6 +9,16 @@ public class CatController : MonoBehaviour
 
     private bool isSitting = false;
     private bool isMeowing = false;
+    private Rigidbody rb;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+
+        // Ensure Rigidbody settings
+        rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+        rb.useGravity = false;  // Optional, depending on whether you want gravity
+    }
 
     void Update()
     {
@@ -24,14 +35,15 @@ public class CatController : MonoBehaviour
 
         if (movement != Vector3.zero && !isSitting)
         {
-            transform.Translate(movement * moveSpeed * Time.deltaTime, Space.World);
-            transform.forward = movement;
+            // Move the cat
+            rb.MovePosition(transform.position + movement * moveSpeed * Time.deltaTime);
+            transform.forward = movement;  // Rotate to face movement direction
         }
     }
 
     void HandleAnimation()
     {
-        float  moveVertical= Input.GetAxis("Horizontal");
+        float moveVertical = Input.GetAxis("Horizontal");
         float moveHorizontal = Input.GetAxis("Vertical");
 
         bool isWalking = moveHorizontal != 0 || moveVertical != 0;
@@ -45,27 +57,21 @@ public class CatController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if (!isMeowing)
+            isMeowing = !isMeowing;
+            animator.SetBool("isMeowing", isMeowing);
+
+            if (meowAudioSource != null)
             {
-                isMeowing = true;
-                animator.SetBool("isMeowing", isMeowing);
-                if (meowAudioSource != null)
+                if (isMeowing)
                 {
                     meowAudioSource.Play();
                 }
-            }else
-            {
-                isMeowing = false;
-                animator.SetBool("isMeowing", isMeowing);
-                if (meowAudioSource != null)
+                else
                 {
                     meowAudioSource.Stop();
                 }
             }
-            
         }
     }
-
-
-    
 }
+
