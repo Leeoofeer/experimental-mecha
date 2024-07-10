@@ -18,10 +18,12 @@ public class CharController : MonoBehaviour
     public FollowPosition cController;
     AnimState _animState;
     public CatController catController;
+    public int catEncounters = 0;
 
     private float _moveX;
     private float _moveZ;
     private Rigidbody rb;
+    public GameObject Fence;
 
     void Start()
     {
@@ -255,6 +257,7 @@ public class CharController : MonoBehaviour
             cController.SetCatMode();
             catController.enabled = true;
             this.gameObject.SetActive(false);
+            Fence.SetActive(true);
         }
     }
 }

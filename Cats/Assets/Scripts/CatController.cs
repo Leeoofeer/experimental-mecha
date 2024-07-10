@@ -10,6 +10,8 @@ public class CatController : MonoBehaviour
     private bool isSitting = false;
     private bool isMeowing = false;
     private Rigidbody rb;
+    public GameObject endTree, endTreeEmpty;
+    public GameObject scratchUI;
 
     void Start()
     {
@@ -70,6 +72,26 @@ public class CatController : MonoBehaviour
                 {
                     meowAudioSource.Stop();
                 }
+            }
+        }
+    }
+
+    public void ScratchTree()
+    {
+        endTreeEmpty.SetActive(false);
+        endTree.SetActive(true);
+    }
+
+    private void OnTriggerStay(Collider collision)
+    {
+        if (collision.gameObject.CompareTag("EndTree"))
+        {
+            //Debug.Log("colisionando con endtree");
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                // Pending add scratch the tree
+                scratchUI.SetActive(true);
+                
             }
         }
     }

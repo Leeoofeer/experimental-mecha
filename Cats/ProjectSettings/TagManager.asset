@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Pescaderia
   - TransformToCat
+  - EndTree
   layers:
   - Default
   - TransparentFX

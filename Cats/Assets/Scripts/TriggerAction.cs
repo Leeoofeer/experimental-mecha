@@ -6,7 +6,9 @@ public enum CatEncounter
     CAT_02,
     CAT_03,
     CAT_04,
-    CAT_05
+    CAT_05,
+    CAT_11,
+    CAT_12
 }
 
 public class TriggerAction : MonoBehaviour
