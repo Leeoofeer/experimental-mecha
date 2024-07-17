@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -12,6 +13,7 @@ public class CatController : MonoBehaviour
     private Rigidbody rb;
     public GameObject endTree, endTreeEmpty;
     public GameObject scratchUI;
+    public AudioSource walk, walkGrass, scratch;
 
     void Start()
     {
@@ -80,6 +82,7 @@ public class CatController : MonoBehaviour
     {
         endTreeEmpty.SetActive(false);
         endTree.SetActive(true);
+        StartCoroutine(ScratchTreeSound());
     }
 
     private void OnTriggerStay(Collider collision)
@@ -94,6 +97,13 @@ public class CatController : MonoBehaviour
                 
             }
         }
+    }
+
+    IEnumerator ScratchTreeSound()
+    {
+        scratch.Play();
+        yield return new WaitForSeconds(4);
+        scratch.Stop();
     }
 }
 
