@@ -260,5 +260,40 @@ public class CharController : MonoBehaviour
             Fence.SetActive(true);
         }
     }
+
+    public AudioSource catPurr;
+    public void CatPurr()
+    {
+        StartCoroutine(PlayPurr());
+    }
+
+    IEnumerator PlayPurr()
+    {
+        catPurr.Play();
+        yield return new WaitForSeconds(2);
+        catPurr.Stop();
+    }
+    public GameObject ct1, ct2, ct3, ct4, ct5;
+    public void DeactivateCateOne()
+    {
+        ct1.GetComponent<AudioSource>().enabled = false;
+    }
+    public void DeactivateCateTwo()
+    {
+        ct2.GetComponent<AudioSource>().enabled = false;
+    }
+    public void DeactivateCateThree()
+    {
+        ct3.GetComponent<AudioSource>().enabled = false;
+    }
+    public void DeactivateCateFour()
+    {
+        ct4.GetComponent<AudioSource>().enabled = false;
+    }
+    public void DeactivateCateFive()
+    {
+        ct5.GetComponent<AudioSource>().enabled = false;
+    }
 }
+
 
