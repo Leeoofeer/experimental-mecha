@@ -7,6 +7,8 @@ TagManager:
   - Pescaderia
   - TransformToCat
   - EndTree
+  - NormalFloor
+  - GrassFloor
   layers:
   - Default
   - TransparentFX

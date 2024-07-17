@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Globalization;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -96,6 +98,51 @@ public class CatController : MonoBehaviour
                 scratchUI.SetActive(true);
                 
             }
+        }
+
+        if(collision.gameObject.CompareTag("GrassFloor"))
+        {
+            if (walkGrass.isPlaying)
+            {
+                walk.Stop();
+            }
+            else
+            {
+                walkGrass.Play();
+            }            
+            
+            
+        }
+        else
+        {
+            walkGrass.Stop();
+        }
+        if (collision.gameObject.CompareTag("NormalFloor"))
+        {
+            if (walk.isPlaying)
+            {
+                walkGrass.Stop();
+            }
+            else
+            {
+                walk.Play();
+
+            }
+        }
+        else
+        {
+            walk.Stop();
+        }
+
+    }
+
+    void OnTriggerExit(Collider collision)
+    {
+        if (collision.gameObject.CompareTag("NormalFloor") || collision.gameObject.CompareTag("GrassFloor"))
+        {
+            walkGrass.Stop();
+            walk.Stop();
+
         }
     }
 
