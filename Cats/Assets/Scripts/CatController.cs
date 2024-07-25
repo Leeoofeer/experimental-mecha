@@ -152,5 +152,25 @@ public class CatController : MonoBehaviour
         yield return new WaitForSeconds(4);
         scratch.Stop();
     }
+    public GameObject ct1, ct2;
+    public void DeactivateCatOne()
+    {
+        ct1.GetComponent<AudioSource>().enabled = false;
+    }
+    public void DeactivateCatTwo()
+    {
+        ct2.GetComponent<AudioSource>().enabled = false;
+    }
+    public AudioSource catTrill;
+    public void CatTrill()
+    {
+        StartCoroutine(PlayTrill());
+    }
+    IEnumerator PlayTrill()
+    {
+        catTrill.Play();
+        yield return new WaitForSeconds(4);
+        catTrill.Stop();
+    }
 }
 
