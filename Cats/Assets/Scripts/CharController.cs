@@ -245,6 +245,7 @@ public class CharController : MonoBehaviour
     #endregion
 
     public GameObject smellFish;
+    public GameObject cat;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -254,6 +255,7 @@ public class CharController : MonoBehaviour
         }
         if (other.gameObject.CompareTag("TransformToCat"))
         {
+            cat.GetComponent<AudioListener>().enabled = true;
             cController.SetCatMode();
             catController.enabled = true;
             this.gameObject.SetActive(false);

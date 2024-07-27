@@ -21,11 +21,11 @@ public class CampoGravitacional : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            Debug.Log("PlayerCat detected");
+            //Debug.Log("PlayerCat detected");
            rb = other.gameObject.GetComponent<Rigidbody>();
             if (rb != null)
             {
-                Debug.Log("PlayerCat atracting");
+                //Debug.Log("PlayerCat atracting");
 
                 Vector3 direction = (transform.position - rb.position).normalized;
                 rb.AddForce(direction * gravitationalForce * Time.deltaTime, ForceMode.Acceleration);
