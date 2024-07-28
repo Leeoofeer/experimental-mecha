@@ -134,8 +134,12 @@ public class CatController : MonoBehaviour
             walk.Stop();
         }
 
+        if (collision.gameObject.CompareTag("CoffeShop"))
+        {
+            frontCoffe.SetActive(false);
+        }
     }
-
+    public GameObject frontCoffe;
     void OnTriggerExit(Collider collision)
     {
         if (collision.gameObject.CompareTag("NormalFloor") || collision.gameObject.CompareTag("GrassFloor"))
@@ -143,6 +147,11 @@ public class CatController : MonoBehaviour
             walkGrass.Stop();
             walk.Stop();
 
+        }
+
+        if (collision.gameObject.CompareTag("CoffeShop"))
+        {
+            frontCoffe.SetActive(true);
         }
     }
 

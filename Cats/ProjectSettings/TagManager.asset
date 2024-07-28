@@ -9,6 +9,8 @@ TagManager:
   - EndTree
   - NormalFloor
   - GrassFloor
+  - Fluid
+  - CoffeShop
   layers:
   - Default
   - TransparentFX
