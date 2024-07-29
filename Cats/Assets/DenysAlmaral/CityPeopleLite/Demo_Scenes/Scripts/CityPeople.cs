@@ -8,9 +8,11 @@ namespace CityPeople
     {
         private AnimationClip[] myClips;
         private Animator animator;
+        
 
         void Start()
         {
+            this.gameObject.tag = "NPC";
             animator = GetComponent<Animator>();
             if (animator != null)
             {

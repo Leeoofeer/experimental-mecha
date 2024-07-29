@@ -11,6 +11,7 @@ TagManager:
   - GrassFloor
   - Fluid
   - CoffeShop
+  - NPC
   layers:
   - Default
   - TransparentFX

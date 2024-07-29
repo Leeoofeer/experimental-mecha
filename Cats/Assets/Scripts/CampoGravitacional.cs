@@ -37,6 +37,10 @@ public class CampoGravitacional : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
+        if (other.CompareTag("NPC"))
+        {
+            return;
+        }
         rb.velocity = Vector3.zero;
         rb = null;
     }
