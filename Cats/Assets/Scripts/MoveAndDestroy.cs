@@ -20,7 +20,7 @@ public class MoveAndDestroy : MonoBehaviour
         }
 
         // Destruye el objeto después de 5 segundos
-        if (timeElapsed >= 5f)
+        if (timeElapsed >= 4f)
         {
             Destroy(gameObject);
         }
