@@ -23,7 +23,7 @@ public class UIController : Singleton<UIController>
 
     public void CatEncounter(CatEncounter catEncounter)
     {
-        switch(catEncounter) {
+       /* switch(catEncounter) {
             case global::CatEncounter.CAT_01:
                 Encounter1.SetActive(true);
                 cC.catEncounters++;
@@ -59,7 +59,7 @@ public class UIController : Singleton<UIController>
             case global::CatEncounter.CAT_12:
                 Encounter12.SetActive(true);
                 break;
-        }    
+        }  */  
     }
 
     public void DeactivateFence()

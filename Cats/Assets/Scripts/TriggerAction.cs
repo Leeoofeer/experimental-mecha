@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public enum CatEncounter
@@ -55,44 +56,41 @@ public class TriggerAction : MonoBehaviour
 
     public GameObject sc1, sc2, sc3, sc4, sc5, sc6, sc7;
     public GameObject cat1m, cat2m, cat3m, cat4m, cat5m, cat11m, cat12m;
+    public GameObject bb1,bb2,bb3,bb4,bb5,bb11,bb12;
 
     private void PerformAction()
     {
         if (spriteRenderer != null && newSprite != null)
         {
-            //spriteRenderer.sprite = newSprite;
+            spriteRenderer.sprite = newSprite;
             if (Encounter == CatEncounter.CAT_01)
             {
-                sc1.SetActive(true);
-                cat1m.SetActive(true);
-                this.gameObject.SetActive(false);
+                bb1.SetActive(true);
+                StartCoroutine(DelayedActionOne());
+                
             }
             else if (Encounter == CatEncounter.CAT_02)
             {
-                sc2.SetActive(true);
-                cat2m.SetActive(true);
-                this.gameObject.SetActive(false);
+                bb2.SetActive(true);
+                StartCoroutine(DelayedActionTwo());
 
             }
             else if (Encounter == CatEncounter.CAT_03)
             {
-                sc3.SetActive(true);
-                cat3m.SetActive(true);
-                this.gameObject.SetActive(false);
+                bb3.SetActive(true);
+                StartCoroutine(DelayedActionThree());
 
             }
             else if (Encounter == CatEncounter.CAT_04)
             {
-                sc4.SetActive(true);
-                cat4m.SetActive(true);
-                this.gameObject.SetActive(false);
+                bb4.SetActive(true);
+                StartCoroutine(DelayedActionFour());
 
             }
             else if (Encounter == CatEncounter.CAT_05)
             {
-                sc5.SetActive(true);
-                cat5m.SetActive(true);
-                this.gameObject.SetActive(false);
+                bb5.SetActive(true);
+                StartCoroutine(DelayedActionFive());
 
             }
             else if (Encounter == CatEncounter.CAT_11)
@@ -117,6 +115,49 @@ public class TriggerAction : MonoBehaviour
         }
     }
 
+    private IEnumerator DelayedActionOne()
+    {
+        yield return new WaitForSeconds(3f);
+        bb1.SetActive(false);
+        sc1.SetActive(true);
+        cat1m.SetActive(true);
+        this.gameObject.SetActive(false);
+    }
 
+    private IEnumerator DelayedActionTwo()
+    {
+        yield return new WaitForSeconds(3f);
+        bb2.SetActive(false);
+        sc2.SetActive(true);
+        cat2m.SetActive(true);
+        this.gameObject.SetActive(false);
+    }
+
+    private IEnumerator DelayedActionThree()
+    {
+        yield return new WaitForSeconds(3f);
+        bb3.SetActive(false);
+        sc3.SetActive(true);
+        cat3m.SetActive(true);
+        this.gameObject.SetActive(false);
+    }
+
+    private IEnumerator DelayedActionFour()
+    {
+        yield return new WaitForSeconds(3f);
+        bb4.SetActive(false);
+        sc4.SetActive(true);
+        cat4m.SetActive(true);
+        this.gameObject.SetActive(false);
+    }
+
+    private IEnumerator DelayedActionFive()
+    {
+        yield return new WaitForSeconds(3f);
+        bb5.SetActive(false);
+        sc5.SetActive(true);
+        cat5m.SetActive(true);
+        this.gameObject.SetActive(false);
+    }
 
 }
