@@ -102,6 +102,7 @@ public class CatController : MonoBehaviour
 
         if(collision.gameObject.CompareTag("GrassFloor"))
         {
+            Debug.Log("colisionando con grass floor");
             if (walkGrass.isPlaying)
             {
                 walk.Stop();
@@ -110,29 +111,22 @@ public class CatController : MonoBehaviour
             {
                 walkGrass.Play();
             }            
-            
+           // walkGrass.Play();
             
         }
-        else
-        {
-            walkGrass.Stop();
-        }
+       
+
         if (collision.gameObject.CompareTag("NormalFloor"))
         {
+            Debug.Log("colisionando con normal floor");
+
             if (walk.isPlaying)
             {
                 walkGrass.Stop();
-            }
-            else
-            {
-                walk.Play();
-
-            }
+            }else 
+            { walk.Play(); } 
         }
-        else
-        {
-            walk.Stop();
-        }
+        
 
         if (collision.gameObject.CompareTag("CoffeShop"))
         {

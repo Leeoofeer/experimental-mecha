@@ -31,7 +31,7 @@ public class TriggerAction : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isPlayerInTrigger = true;
-            Debug.Log("Player entered the trigger area");
+            //Debug.Log("Player entered the trigger area");
         }
     }
 
@@ -40,7 +40,7 @@ public class TriggerAction : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isPlayerInTrigger = false;
-            Debug.Log("Player exited the trigger area");
+            //Debug.Log("Player exited the trigger area");
         }
     }
 
@@ -48,7 +48,7 @@ public class TriggerAction : MonoBehaviour
     {
         if (isPlayerInTrigger && Input.GetKeyDown(KeyCode.E) && !_alreadyInteracted)
         {
-            Debug.Log("Player interacted with the trigger area");
+            //Debug.Log("Player interacted with the trigger area");
             GameEvents.CatEncounter(Encounter);
             PerformAction();
             _alreadyInteracted = true;
@@ -59,18 +59,21 @@ public class TriggerAction : MonoBehaviour
     public GameObject cat1m, cat2m, cat3m, cat4m, cat5m, cat11m, cat12m;
     public GameObject bb1,bb2,bb3,bb4,bb5,bb11,bb12;
     public GameObject cb1, cb2, cb3, cb4, cb5;
+    public AudioSource catTrill;
 
     private void PerformAction()
     {
         if (Encounter == CatEncounter.CAT_11)
         {
             sc6.SetActive(true);
+            catTrill.Play();
             StartCoroutine(DelayedActionSix());
 
         }
         else if (Encounter == CatEncounter.CAT_12)
         {
             sc7.SetActive(true);
+            catTrill.Play();
             StartCoroutine(DelayedActionSeven());
 
         }
@@ -175,12 +178,14 @@ public class TriggerAction : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
         sc6.SetActive(false);
+        catTrill.Stop();
     }
 
     private IEnumerator DelayedActionSeven()
     {
         yield return new WaitForSeconds(3f);
         sc7.SetActive(false);
+        catTrill.Stop();
 
     }
 
