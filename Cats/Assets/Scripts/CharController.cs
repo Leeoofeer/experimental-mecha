@@ -252,6 +252,7 @@ public class CharController : MonoBehaviour
         if (other.gameObject.CompareTag("Pescaderia"))
         {
             smellFish.SetActive(true);
+            StartCoroutine(DelayedActionOne());
         }
         if (other.gameObject.CompareTag("TransformToCat"))
         {
@@ -261,6 +262,12 @@ public class CharController : MonoBehaviour
             this.gameObject.SetActive(false);
             Fence.SetActive(true);
         }
+    }
+
+    private IEnumerator DelayedActionOne()
+    {
+        yield return new WaitForSeconds(3);
+        smellFish.SetActive(false);
     }
 
     public AudioSource catPurr;
