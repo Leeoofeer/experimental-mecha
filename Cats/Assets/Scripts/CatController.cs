@@ -95,8 +95,8 @@ public class CatController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
                 // Pending add scratch the tree
-                scratchUI.SetActive(true);
-                
+                //scratchUI.SetActive(true);
+                ScratchTree();
             }
         }
 
