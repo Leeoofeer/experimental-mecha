@@ -25,7 +25,7 @@ Shader "Hidden/CatVisionColor"
 
                 // Convert the RGB color to the grayscale equivalent perceived by cats
                 float gray = dot(c.rgb, float3(0.299, 0.587, 0.114)); // Luminance
-                float3 catColor = lerp(float3(gray, gray, gray), c.rgb, float3(0.5, 0.5, 0.5));
+                float3 catColor = lerp(float3(gray, gray, gray), c.rgb, float3(0.7, 0.7, 0.7));
                 
                 // Reduce the red component
                 catColor.r *= 0.5;

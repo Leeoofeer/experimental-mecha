@@ -48,6 +48,7 @@ public class TriggerAction : MonoBehaviour
     {
         if (isPlayerInTrigger && Input.GetKeyDown(KeyCode.E) && !_alreadyInteracted)
         {
+            Debug.Log("Player interacted with the trigger area");
             GameEvents.CatEncounter(Encounter);
             PerformAction();
             _alreadyInteracted = true;
@@ -61,6 +62,18 @@ public class TriggerAction : MonoBehaviour
 
     private void PerformAction()
     {
+        if (Encounter == CatEncounter.CAT_11)
+        {
+            sc6.SetActive(true);
+            StartCoroutine(DelayedActionSix());
+
+        }
+        else if (Encounter == CatEncounter.CAT_12)
+        {
+            sc7.SetActive(true);
+            StartCoroutine(DelayedActionSeven());
+
+        }
         if (spriteRenderer != null && newSprite != null)
         {
             spriteRenderer.sprite = newSprite;
@@ -99,20 +112,7 @@ public class TriggerAction : MonoBehaviour
                 StartCoroutine(DelayedActionFive());
 
             }
-            else if (Encounter == CatEncounter.CAT_11)
-            {
-                sc6.SetActive(true);
-                cat11m.SetActive(true);
-                this.gameObject.SetActive(false);
-
-            }
-            else if (Encounter == CatEncounter.CAT_12)
-            {
-                sc7.SetActive(true);
-                cat12m.SetActive(true);
-                this.gameObject.SetActive(false);
-
-            }
+            
             Debug.Log("Sprite changed!");
         }
         else
@@ -169,6 +169,19 @@ public class TriggerAction : MonoBehaviour
         sc5.SetActive(true);
         cat5m.SetActive(true);
         this.gameObject.SetActive(false);
+    }
+
+    private IEnumerator DelayedActionSix()
+    {
+        yield return new WaitForSeconds(3f);
+        sc6.SetActive(false);
+    }
+
+    private IEnumerator DelayedActionSeven()
+    {
+        yield return new WaitForSeconds(3f);
+        sc7.SetActive(false);
+
     }
 
 }
