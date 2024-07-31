@@ -53,11 +53,62 @@ public class TriggerAction : MonoBehaviour
         }
     }
 
+    public GameObject sc1, sc2, sc3, sc4, sc5, sc6, sc7;
+    public GameObject cat1m, cat2m, cat3m, cat4m, cat5m, cat11m, cat12m;
+
     private void PerformAction()
     {
         if (spriteRenderer != null && newSprite != null)
         {
-            spriteRenderer.sprite = newSprite;
+            //spriteRenderer.sprite = newSprite;
+            if (Encounter == CatEncounter.CAT_01)
+            {
+                sc1.SetActive(true);
+                cat1m.SetActive(true);
+                this.gameObject.SetActive(false);
+            }
+            else if (Encounter == CatEncounter.CAT_02)
+            {
+                sc2.SetActive(true);
+                cat2m.SetActive(true);
+                this.gameObject.SetActive(false);
+
+            }
+            else if (Encounter == CatEncounter.CAT_03)
+            {
+                sc3.SetActive(true);
+                cat3m.SetActive(true);
+                this.gameObject.SetActive(false);
+
+            }
+            else if (Encounter == CatEncounter.CAT_04)
+            {
+                sc4.SetActive(true);
+                cat4m.SetActive(true);
+                this.gameObject.SetActive(false);
+
+            }
+            else if (Encounter == CatEncounter.CAT_05)
+            {
+                sc5.SetActive(true);
+                cat5m.SetActive(true);
+                this.gameObject.SetActive(false);
+
+            }
+            else if (Encounter == CatEncounter.CAT_11)
+            {
+                sc6.SetActive(true);
+                cat11m.SetActive(true);
+                this.gameObject.SetActive(false);
+
+            }
+            else if (Encounter == CatEncounter.CAT_12)
+            {
+                sc7.SetActive(true);
+                cat12m.SetActive(true);
+                this.gameObject.SetActive(false);
+
+            }
             Debug.Log("Sprite changed!");
         }
         else
@@ -65,4 +116,7 @@ public class TriggerAction : MonoBehaviour
             Debug.LogWarning("SpriteRenderer or newSprite is not assigned");
         }
     }
+
+
+
 }
